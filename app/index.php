@@ -1,5 +1,4 @@
 <?php
-    session_start();
     error_reporting(-1);
     ini_set('display_errors', 1);
 
@@ -13,13 +12,10 @@
     require __DIR__ . '/../vendor/autoload.php';
 
     require __DIR__ . '/accesoADatos/AccesoDatos.php';
+    require __DIR__ . '/sesiones/SesionControlador.php';
     require __DIR__ . '/funciones/funciones.php';
     require __DIR__ . '/entidades/Usuario.php';
-    require __DIR__ . '/entidades/Destino.php';
-    require __DIR__ . '/entidades/Mensaje.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
-    require __DIR__ . '/controlador/DestinoControlador.php';
-    require __DIR__ . '/controlador/MensajeControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -53,28 +49,9 @@
     });
 
     //Registro
-    $app->post('[/]', \UsuarioControlador::class . ":ValidarUsuario");
-
-    //Registración
-    $app->group("/Registro", function (RouteCollectorProxy $grupoRegistro) {
-        $grupoRegistro->post("[/]", \UsuarioControlador::class . ':BuscarNombreDeUsuario' );
-        $grupoRegistro->post('/UsuarioNuevo[/]', \UsuarioControlador::class . ':CrearUsuario' );
-    });
-    
-    //Destino
-    $app->group('/Destino', function (RouteCollectorProxy $grupoDestino) {
-        $grupoDestino->post('/Nuevo[/]', \DestinoControlador::class . ':CrearDestino' );
-        $grupoDestino->get('[/]', \DestinoControlador::class . ':RetornarDestinos' );
-    });
-
-    //Mensaje
-    $app->group('/Mensaje', function (RouteCollectorProxy $grupoMensaje) {
-        $grupoMensaje->post('[/]', \MensajeControlador::class . ':CrearMensaje' );
-        $grupoMensaje->get('/{idDestino}[/]', \MensajeControlador::class . ':RetornarMensajesDeDestino' );
-        $grupoMensaje->get('[/]', \MensajeControlador::class . ':RetornarMensajes' );
-        //Revisar método patch()
-        $grupoMensaje->patch('/{idMensaje}[/]', \MensajeControlador::class . ':ActualizarMensaje' );
-        $grupoMensaje->delete('/Borrar/{idMensaje}', \MensajeControlador::class . ':BorrarMensaje' );
+    $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
+        $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
+        $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
