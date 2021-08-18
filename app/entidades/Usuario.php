@@ -42,7 +42,7 @@
 
         public static function obtenerUsuario($email){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena FROM Usuario WHERE email=?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena FROM usuario WHERE email=?");
             $consulta->execute(array($email));
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
 
