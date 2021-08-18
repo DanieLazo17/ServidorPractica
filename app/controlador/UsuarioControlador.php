@@ -11,20 +11,26 @@
             $listaDeParametros = $request->getParsedBody();
 
             $objetoUsuario = Usuario::obtenerUsuario($listaDeParametros['email']);
+            $UsuarioRegistrado = array("idUsuario"=>null, "email"=>null);
 
             if(!$objetoUsuario){
-                $response->getBody()->write("No existe usuario");
+                $response->getBody()->write(json_encode($UsuarioRegistrado));
                 return $response;
             }
     
             if($objetoUsuario->compararContrasena($listaDeParametros['pass'])){
                 SesionControlador::Iniciar($listaDeParametros['email']);
-                $response->getBody()->write("Acceso correcto");
+
+                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "email"=>$objetoUsuario->getEmail());
+                $response->getBody()->write(json_encode($UsuarioRegistrado));
+                //$response->getBody()->write("Acceso correcto");
             }
             else{
-                $response->getBody()->write("Contraseña incorrecta");
+                $response->getBody()->write(json_encode($UsuarioRegistrado));
+                //$response->getBody()->write("Contraseña incorrecta");
             }
-            return $response;
+            return $response->withHeader('Content-Type', 'application/json');
+            //return $response;
         }
 
     }

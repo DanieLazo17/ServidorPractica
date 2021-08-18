@@ -51,10 +51,14 @@
         return $response;
     });
 
-    //Registro
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
+    });
+
+    $app->group("/Socio", function (RouteCollectorProxy $grupoSocio) {
+        $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
+        $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
