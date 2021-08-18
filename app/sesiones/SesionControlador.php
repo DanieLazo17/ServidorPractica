@@ -3,16 +3,10 @@
     class SesionControlador{
 
         public static function Iniciar($email){
-            session_start();
-
             $_SESSION['email'] = $email;
         }
 
         public static function Cerrar(){
-            // Inicializar la sesión.
-            // Si está usando session_name("algo"), ¡no lo olvide ahora!
-            session_start();
-
             // Destruir todas las variables de sesión.
             $_SESSION = array();
 
