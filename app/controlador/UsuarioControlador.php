@@ -33,6 +33,36 @@
             //return $response;
         }
 
+        public function ComprobarCorreo($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+
+            $objetoUsuario = Usuario::buscarCorreo($listaDeParametros['email']);
+
+            if(!$objetoUsuario){
+                $response->getBody()->write("Correo correcto");
+                return $response;
+            }
+
+            $response->getBody()->write("Correo duplicado");
+            return $response;
+        }
+
+        public function Registrar($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+
+            $email = $listaDeParametros['email'];
+            $contrasenaAleatoria = generarContrasenaAleatoria();
+            $hashDeContrasena = password_hash($contrasenaAleatoria, PASSWORD_DEFAULT);
+
+            $ObjetoUsuario = new Usuario();
+            $ObjetoUsuario->setEmail($email);
+            $ObjetoUsuario->setContrasena($hashDeContrasena);
+            $ObjetoUsuario->guardarUsuario();
+
+            $response->getBody()->write($contrasenaAleatoria);
+            return $response;
+        }
+        
     }
 
 ?>

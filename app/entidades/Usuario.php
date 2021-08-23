@@ -53,6 +53,22 @@
             
             return password_verify($contrasenaIngresada, $this->getContrasena());
         }
+
+        public function guardarUsuario(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuario(email, contrasena) VALUES (?,?)");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->email, $this->contrasena));
+        }
+
+        public static function buscarCorreo($email){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT email FROM usuario WHERE email=?");
+            $consulta->execute(array($email));
+            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+
+            return $consulta->fetch();
+        }
     }
 
 ?>

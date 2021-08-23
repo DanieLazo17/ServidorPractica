@@ -15,7 +15,8 @@
                 die();
             }
         }
-
+        
+        //Patrón Singleton
         public static function obtenerInstancia(){
             if (!isset(self::$objAccesoDatos)) {
                 self::$objAccesoDatos = new AccesoDatos();
@@ -25,6 +26,12 @@
 
         public function prepararConsulta($sql){
             return $this->objetoPDO->prepare($sql);
+        }
+
+        //Cerramos conexión de base de datos
+        public function cerrarConexion(){
+            $this->objetoPDO = null;
+            self::$objAccesoDatos = null;
         }
 
         public function obtenerUltimoId(){

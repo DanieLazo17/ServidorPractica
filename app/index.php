@@ -18,7 +18,10 @@
     require __DIR__ . '/sesiones/SesionControlador.php';
     require __DIR__ . '/funciones/funciones.php';
     require __DIR__ . '/entidades/Usuario.php';
+    require __DIR__ . '/entidades/Administrativo.php';
+    require __DIR__ . '/entidades/Socio.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
+    require __DIR__ . '/controlador/SocioControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -53,10 +56,15 @@
 
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
+        $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
+        $grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
+        //
+        $grupoUsuario->post("/Recuperacion[/]", \UsuarioControlador::class . ':RecuperarContrasena' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 
     $app->group("/Socio", function (RouteCollectorProxy $grupoSocio) {
+        $grupoSocio->post("/{idUsuario}[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
     });

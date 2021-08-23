@@ -6,9 +6,9 @@
         private $nombre;
         private $apellido;
         private $direccion;
-        private $email;
         private $telefono;
         private $estado;
+        private $usuario;
 
         function __construct(){
             
@@ -34,11 +34,6 @@
             $this->direccion = $direccion;
         }
 
-        function setEmail($email){
-            
-            $this->email = $email;
-        }
-
         function setTelefono($telefono){
             
             $this->telefono = $telefono;
@@ -47,6 +42,11 @@
         function setEstado($estado){
             
             $this->estado = $estado;
+        }
+
+        function setUsuario($usuario){
+            
+            $this->usuario = $usuario;
         }
 
         function getNroSocio(){
@@ -69,11 +69,6 @@
             return $this->direccion;
         }
 
-        function getEmail(){
-            
-            return $this->email;
-        }
-
         function getTelefono(){
             
             return $this->telefono;
@@ -82,6 +77,18 @@
         function getEstado(){
             
             return $this->estado;
+        }
+
+        function getUsuario(){
+            
+            return $this->usuario;
+        }
+
+        public function guardarSocio(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socio(nroSocio, nombre, apellido, direccion, telefono, usuario) VALUES (?,?,?,?,?,?)");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->usuario));
         }
 
         public static function obtenerSocios(){
@@ -100,6 +107,13 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
+        public static function obtenerUltimoId(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(nroSocio) AS nroSocio FROM socio");
+            $consulta->execute();
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
     }
 
 ?>
