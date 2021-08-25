@@ -57,7 +57,7 @@
             $ObjetoUsuario = new Usuario();
             $ObjetoUsuario->setEmail($email);
             $ObjetoUsuario->setContrasena($hashDeContrasena);
-            //$ObjetoUsuario->guardarUsuario();
+            $ObjetoUsuario->guardarUsuario();
             $UltimoId = Usuario::obtenerUltimoId();
             $UsuarioNuevo = array("idUsuario"=>$UltimoId['idUsuario'], "contrasena"=>$contrasenaAleatoria);
 
@@ -68,26 +68,26 @@
         
         public function RecuperarContrasena($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
-            /*
+            
             $objetoUsuario = Usuario::buscarCorreo($listaDeParametros['email']);
 
             if(!$objetoUsuario){
                 $response->getBody()->write("No existe correo");
                 return $response;
             }
-            */
+            
             $contrasenaNueva = generarContrasenaAleatoria();
             $hashDeContrasena = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
 
-            //$ObjUsuario = new Usuario();
-            //$ObjUsuario->setEmail($objetoUsuario['email']);
-            //$ObjUsuario->setContrasena($hashDeContrasena);
-            //$ObjUsuario->actualizarContrasena();
+            $ObjUsuario = new Usuario();
+            $ObjUsuario->setEmail($objetoUsuario['email']);
+            $ObjUsuario->setContrasena($hashDeContrasena);
+            $ObjUsuario->actualizarContrasena();
             $texto = "Recuperación de Contraseña";
 
             //mail('37198321@itbeltran.com.ar', $texto, $contrasenaNueva);
 
-            $response->getBody()->write("Se envió una nueva contraseña al correo ".$listaDeParametros['email']);
+            $response->getBody()->write("Se envió una nueva contraseña ". $contrasenaNueva ." al correo ".$listaDeParametros['email']);
             return $response;
         }
     }

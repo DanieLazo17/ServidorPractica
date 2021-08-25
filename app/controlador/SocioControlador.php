@@ -8,7 +8,7 @@
             
             $idUsuario = $UsuarioNuevo['idUsuario'];
             $listaDeParametros = $request->getParsedBody();
-            /*
+            
             $UltimoId = Socio::obtenerUltimoId();
             $UltimoId['nroSocio'] += 1;
             $nombre = $listaDeParametros['nombre'];
@@ -23,9 +23,9 @@
             $ObjetoSocio->setDireccion($direccion);
             $ObjetoSocio->setTelefono($telefono);
             $ObjetoSocio->setUsuario($idUsuario);
-            */
-            //$ObjetoSocio->guardarSocio();
-            //$ObjetoSocio->agregarPerfil();
+            
+            $ObjetoSocio->guardarSocio();
+            $ObjetoSocio->agregarPerfil();
             
             //$response->getBody()->write(json_encode($args));
             $response->getBody()->write(json_encode($UsuarioNuevo));
