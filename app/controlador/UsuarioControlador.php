@@ -11,7 +11,7 @@
             $listaDeParametros = $request->getParsedBody();
 
             $objetoUsuario = Usuario::obtenerUsuario($listaDeParametros['email']);
-            $UsuarioRegistrado = array("idUsuario"=>null, "email"=>null);
+            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null);
 
             if(!$objetoUsuario){
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
@@ -19,9 +19,10 @@
             }
     
             if($objetoUsuario->compararContrasena($listaDeParametros['pass'])){
-                SesionControlador::Iniciar($listaDeParametros['email']);
+                //SesionControlador::Iniciar($listaDeParametros['email']);
+                $idDePerfil = $objetoUsuario->obtenerPerfil();
 
-                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "email"=>$objetoUsuario->getEmail());
+                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail());
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
                 //$response->getBody()->write("Acceso correcto");
             }

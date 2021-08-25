@@ -40,15 +40,6 @@
             return $this->contrasena;
         }
 
-        public static function obtenerUsuario($email){
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena FROM usuario WHERE email=?");
-            $consulta->execute(array($email));
-            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
-
-            return $consulta->fetch();
-        }
-
         public function compararContrasena($contrasenaIngresada){
             
             return password_verify($contrasenaIngresada, $this->getContrasena());
@@ -66,6 +57,23 @@
             $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET contrasena = ? WHERE email = ?");
             //Devuelve true en caso de éxito o false en caso de error.
             return $consulta->execute(array($this->contrasena, $this->email));
+        }
+
+        public function obtenerPerfil(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idPerfil FROM perfilUsuario WHERE idUsuario = ?");
+            $consulta->execute(array($this->idUsuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public static function obtenerUsuario($email){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena FROM usuario WHERE email=?");
+            $consulta->execute(array($email));
+            $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
+
+            return $consulta->fetch();
         }
 
         public static function buscarCorreo($email){
