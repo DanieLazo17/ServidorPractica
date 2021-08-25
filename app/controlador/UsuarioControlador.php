@@ -80,14 +80,14 @@
             $hashDeContrasena = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
 
             $ObjUsuario = new Usuario();
-            $ObjUsuario->setEmail($objetoUsuario['email']);
+            $ObjUsuario->setEmail($objetoUsuario->getEmail());
             $ObjUsuario->setContrasena($hashDeContrasena);
-            $ObjUsuario->actualizarContrasena();
+            //$ObjUsuario->actualizarContrasena();
             $texto = "Recuperación de Contraseña";
 
             //mail('37198321@itbeltran.com.ar', $texto, $contrasenaNueva);
 
-            $response->getBody()->write("Se envió una nueva contraseña ". $contrasenaNueva ." al correo ".$listaDeParametros['email']);
+            $response->getBody()->write("Se envió su nueva contraseña ". $contrasenaNueva ." al correo ".$listaDeParametros['email']);
             return $response;
         }
     }
