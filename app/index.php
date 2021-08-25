@@ -57,14 +57,14 @@
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
         $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
-        $grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
-        //
+        //Ir a ruteo /Socio/Registro
+        //$grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
         $grupoUsuario->post("/Recuperacion[/]", \UsuarioControlador::class . ':RecuperarContrasena' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 
     $app->group("/Socio", function (RouteCollectorProxy $grupoSocio) {
-        $grupoSocio->post("/{idUsuario}[/]", \SocioControlador::class . ':RegistrarSocio' );
+        $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
     });

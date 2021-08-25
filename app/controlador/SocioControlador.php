@@ -3,9 +3,12 @@
     class SocioControlador{
 
         public function RegistrarSocio($request, $response, $args){
-            $idUsuario = $args['idUsuario'];
-            $listaDeParametros = $request->getParsedBody();
+            $UsuarioControlador = new UsuarioControlador();
+            $UsuarioNuevo = $UsuarioControlador->Registrar($request, $response, $args);
             
+            $idUsuario = $UsuarioNuevo['idUsuario'];
+            $listaDeParametros = $request->getParsedBody();
+            /*
             $UltimoId = Socio::obtenerUltimoId();
             $UltimoId['nroSocio'] += 1;
             $nombre = $listaDeParametros['nombre'];
@@ -20,9 +23,12 @@
             $ObjetoSocio->setDireccion($direccion);
             $ObjetoSocio->setTelefono($telefono);
             $ObjetoSocio->setUsuario($idUsuario);
-            $ObjetoSocio->guardarSocio();
+            */
+            //$ObjetoSocio->guardarSocio();
+            //$ObjetoSocio->agregarPerfil();
             
-            $response->getBody()->write(json_encode($args));
+            //$response->getBody()->write(json_encode($args));
+            $response->getBody()->write(json_encode($UsuarioNuevo));
             return $response;
         }
 

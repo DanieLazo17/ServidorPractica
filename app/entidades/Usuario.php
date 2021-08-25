@@ -61,6 +61,13 @@
             return $consulta->execute(array($this->email, $this->contrasena));
         }
 
+        public function actualizarContrasena(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET contrasena = ? WHERE email = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->contrasena, $this->email));
+        }
+
         public static function buscarCorreo($email){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT email FROM usuario WHERE email=?");
@@ -68,6 +75,14 @@
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
 
             return $consulta->fetch();
+        }
+
+        public static function obtenerUltimoId(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(idUsuario) AS idUsuario FROM usuario");
+            $consulta->execute();
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
         }
     }
 

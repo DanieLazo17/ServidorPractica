@@ -91,6 +91,14 @@
             return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->usuario));
         }
 
+        public function agregarPerfil(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO perfilUsuario(idUsuario, idPerfil) VALUES (?,?)");
+            //Devuelve true en caso de éxito o false en caso de error.
+            $idPerfil = "SOC";
+            return $consulta->execute(array($this->usuario, $idPerfil));
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre FROM socio");
