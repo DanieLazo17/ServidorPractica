@@ -115,7 +115,7 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
-        public static function obtenerUltimoId(){
+        public static function obtenerUltimoNroSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(nroSocio) AS nroSocio FROM socio");
             $consulta->execute();

@@ -9,15 +9,15 @@
             $idUsuario = $UsuarioNuevo['idUsuario'];
             $listaDeParametros = $request->getParsedBody();
             
-            $UltimoId = Socio::obtenerUltimoId();
-            $UltimoId['nroSocio'] += 1;
+            $UltimoNro = Socio::obtenerUltimoNroSocio();
+            $UltimoNro['nroSocio'] += 1;
             $nombre = $listaDeParametros['nombre'];
             $apellido = $listaDeParametros['apellido'];
             $direccion = $listaDeParametros['direccion'];
             $telefono = $listaDeParametros['telefono'];
 
             $ObjetoSocio = new Socio();
-            $ObjetoSocio->setNroSocio($UltimoId['nroSocio']);
+            $ObjetoSocio->setNroSocio($UltimoNro['nroSocio']);
             $ObjetoSocio->setNombre($nombre);
             $ObjetoSocio->setApellido($apellido);
             $ObjetoSocio->setDireccion($direccion);
