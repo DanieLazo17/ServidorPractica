@@ -84,9 +84,8 @@
             $ObjUsuario->setEmail($objetoUsuario->getEmail());
             $ObjUsuario->setContrasena($hashDeContrasena);
             //$ObjUsuario->actualizarContrasena();
-            $asunto = "Recuperación de Contraseña";
+            $asunto = "Clave de Acceso";
             $mensaje = "Su contraseña nueva es: " . $contrasenaNueva;
-            //Configurar puerto (587, 465)
             /*
             $cabecera = 'From: daniel.lazo92@gmail.com' . "\r\n" .
             'Reply-To: daniel.lazo92@gmail.com' . "\r\n" .
@@ -97,9 +96,9 @@
             ini_set('smtp_port', '587');
             ini_set('sendmail_from', 'daniel.lazo92@gmail.com');
             */
-            enviarCorreo('primerospasosbeltran@gmail.com', $asunto, $mensaje);
+            $respuesta = enviarCorreo('primerospasosbeltran@gmail.com', $asunto, $mensaje);
             
-            $response->getBody()->write("Se envió su nueva contraseña ". $contrasenaNueva ." al correo ".$listaDeParametros['email']);
+            $response->getBody()->write($respuesta);
             return $response;
         }
     }
