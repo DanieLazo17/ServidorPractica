@@ -84,10 +84,21 @@
             $ObjUsuario->setEmail($objetoUsuario->getEmail());
             $ObjUsuario->setContrasena($hashDeContrasena);
             //$ObjUsuario->actualizarContrasena();
-            $texto = "Recuperación de Contraseña";
-
-            //mail('37198321@itbeltran.com.ar', $texto, $contrasenaNueva);
-
+            $asunto = "Recuperación de Contraseña";
+            $mensaje = "Su contraseña nueva es: " . $contrasenaNueva;
+            //Configurar puerto (587, 465)
+            /*
+            $cabecera = 'From: daniel.lazo92@gmail.com' . "\r\n" .
+            'Reply-To: daniel.lazo92@gmail.com' . "\r\n" .
+            'X-Mailer: PHP/' . phpversion();
+            
+            $contrasenaNueva = ini_get('smtp_port');
+            ini_set('SMTP', 'smtp.gmail.com');
+            ini_set('smtp_port', '587');
+            ini_set('sendmail_from', 'daniel.lazo92@gmail.com');
+            */
+            enviarCorreo('primerospasosbeltran@gmail.com', $asunto, $mensaje);
+            
             $response->getBody()->write("Se envió su nueva contraseña ". $contrasenaNueva ." al correo ".$listaDeParametros['email']);
             return $response;
         }
