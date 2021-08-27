@@ -28,7 +28,8 @@
             $ObjetoSocio->agregarPerfil();
             
             //$response->getBody()->write(json_encode($args));
-            $response->getBody()->write(json_encode($UsuarioNuevo));
+            $SocioNuevo = array("nroSocio"=>$UltimoNro['nroSocio'], "contrasena"=>$UsuarioNuevo['contrasena']);
+            $response->getBody()->write(json_encode($SocioNuevo));
             return $response;
         }
 

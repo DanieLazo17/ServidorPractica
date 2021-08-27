@@ -91,7 +91,7 @@
             'Reply-To: daniel.lazo92@gmail.com' . "\r\n" .
             'X-Mailer: PHP/' . phpversion();
             
-            $contrasenaNueva = ini_get('smtp_port');
+            $puerto = ini_get('smtp_port');
             ini_set('SMTP', 'smtp.gmail.com');
             ini_set('smtp_port', '587');
             ini_set('sendmail_from', 'daniel.lazo92@gmail.com');
