@@ -96,7 +96,7 @@
             ini_set('smtp_port', '587');
             ini_set('sendmail_from', 'daniel.lazo92@gmail.com');
             */
-            $respuesta = enviarCorreo('primerospasosbeltran@gmail.com', $asunto, $mensaje);
+            $respuesta = enviarCorreo($ObjUsuario->getEmail(), $asunto, $mensaje);
             
             $response->getBody()->write($respuesta);
             return $response;

@@ -16,6 +16,11 @@
             $direccion = $listaDeParametros['direccion'];
             $telefono = $listaDeParametros['telefono'];
 
+            //Normalizar datos
+            $nombre = ucwords($nombre);
+            $apellido = ucwords($apellido);
+            $direccion = ucwords($direccion);
+
             $ObjetoSocio = new Socio();
             $ObjetoSocio->setNroSocio($UltimoNro['nroSocio']);
             $ObjetoSocio->setNombre($nombre);
@@ -29,7 +34,7 @@
             
             //$response->getBody()->write(json_encode($args));
             $SocioNuevo = array("nroSocio"=>$UltimoNro['nroSocio'], "contrasena"=>$UsuarioNuevo['contrasena']);
-            $response->getBody()->write(json_encode($SocioNuevo));
+            $response->getBody()->write("Socio registrado correctamente. Su número de socio es ".$UltimoNro['nroSocio']. " y su contraseña provisoria es ". $UsuarioNuevo['contrasena']);
             return $response;
         }
 

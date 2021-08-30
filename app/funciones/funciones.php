@@ -43,7 +43,7 @@
             $mail->Body    = $mensaje;
 
             $mail->send();
-            return '¡El mensaje se envió correctamente!';
+            return '¡El mensaje se envió correctamente, revise su correo!';
         } catch (Exception $e) {
             return "Error al enviar mensaje: {$mail->ErrorInfo}";
         }
