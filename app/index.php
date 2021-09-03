@@ -63,6 +63,7 @@
         //Ir a ruteo /Socio/Registro
         //$grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
         $grupoUsuario->post("/Recuperacion[/]", \UsuarioControlador::class . ':RecuperarContrasena' );
+        $grupoUsuario->post("/CambioDeContrasena[/]", \UsuarioControlador::class . ':CambiarContrasena' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 

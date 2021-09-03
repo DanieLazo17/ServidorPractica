@@ -5,6 +5,7 @@
         private $idUsuario;
         private $email;
         private $contrasena;
+        private $origenDeContrasena;
 
         function __construct(){
             
@@ -25,6 +26,11 @@
             $this->contrasena = $contrasena;
         }
 
+        function setOrigenDeContrasena($origenDeContrasena){
+            
+            $this->origenDeContrasena = $origenDeContrasena;
+        }
+
         function getIdUsuario(){
             
             return $this->idUsuario;
@@ -40,6 +46,11 @@
             return $this->contrasena;
         }
 
+        function getOrigenDeContrasena(){
+            
+            return $this->origenDeContrasena;
+        }
+
         public function compararContrasena($contrasenaIngresada){
             
             return password_verify($contrasenaIngresada, $this->getContrasena());
@@ -47,9 +58,9 @@
 
         public function guardarUsuario(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuario(email, contrasena) VALUES (?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO usuario(email, contrasena, origenDeContrasena) VALUES (?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->email, $this->contrasena));
+            return $consulta->execute(array($this->email, $this->contrasena, $this->origenDeContrasena));
         }
 
         public function actualizarContrasena(){
@@ -57,6 +68,13 @@
             $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET contrasena = ? WHERE email = ?");
             //Devuelve true en caso de éxito o false en caso de error.
             return $consulta->execute(array($this->contrasena, $this->email));
+        }
+
+        public function actualizarOrigenDeContrasena(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET origenDeContrasena = ? WHERE email = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->origenDeContrasena, $this->email));
         }
 
         public function obtenerPerfil(){
@@ -69,7 +87,7 @@
 
         public static function obtenerUsuario($email){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena FROM usuario WHERE email=?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena, origenDeContrasena FROM usuario WHERE email=?");
             $consulta->execute(array($email));
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
 
@@ -78,7 +96,7 @@
 
         public static function buscarCorreo($email){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT email FROM usuario WHERE email=?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email FROM usuario WHERE email=?");
             $consulta->execute(array($email));
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
 

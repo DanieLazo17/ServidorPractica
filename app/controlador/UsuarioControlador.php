@@ -11,7 +11,7 @@
             $listaDeParametros = $request->getParsedBody();
 
             $objetoUsuario = Usuario::obtenerUsuario($listaDeParametros['email']);
-            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null);
+            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "origenDeContrasena"=>null);
 
             if(!$objetoUsuario){
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
@@ -22,7 +22,7 @@
                 //SesionControlador::Iniciar($listaDeParametros['email']);
                 $idDePerfil = $objetoUsuario->obtenerPerfil();
 
-                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail());
+                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
                 //$response->getBody()->write("Acceso correcto");
             }
@@ -58,6 +58,7 @@
             $ObjetoUsuario = new Usuario();
             $ObjetoUsuario->setEmail($email);
             $ObjetoUsuario->setContrasena($hashDeContrasena);
+            $ObjetoUsuario->setOrigenDeContrasena("SIS");
             $ObjetoUsuario->guardarUsuario();
             $UltimoId = Usuario::obtenerUltimoId();
             $UsuarioNuevo = array("idUsuario"=>$UltimoId['idUsuario'], "contrasena"=>$contrasenaAleatoria);
@@ -81,9 +82,12 @@
             $hashDeContrasena = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
 
             $ObjUsuario = new Usuario();
+            $ObjUsuario->setIdUsuario($objetoUsuario->getIdUsuario());
             $ObjUsuario->setEmail($objetoUsuario->getEmail());
             $ObjUsuario->setContrasena($hashDeContrasena);
+            $ObjUsuario->setOrigenDeContrasena("SIS");
             //$ObjUsuario->actualizarContrasena();
+            //$ObjUsuario->actualizarOrigenDeContrasena();
             $asunto = "Clave de Acceso";
             $mensaje = "Su contraseña nueva es: " . $contrasenaNueva;
             /*
@@ -97,8 +101,34 @@
             ini_set('sendmail_from', 'daniel.lazo92@gmail.com');
             */
             $respuesta = enviarCorreo($ObjUsuario->getEmail(), $asunto, $mensaje);
-            
+            //$respuesta = enviarCorreo("primerospasosbeltran@gmail.com", $asunto, $mensaje);
             $response->getBody()->write($respuesta);
+            return $response;
+        }
+
+        public function CambiarContrasena($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+
+            $email = $listaDeParametros['email'];
+            $contrasenaNueva = $listaDeParametros['contrasenaNueva'];
+
+            $hashDeContrasena = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
+            /*
+            $objetoUsuario = Usuario::buscarCorreo($listaDeParametros['email']);
+
+            if(!$objetoUsuario){
+                $response->getBody()->write("No existe correo");
+                return $response;
+            }
+            */
+            $ObjUsuario = new Usuario();
+            $ObjUsuario->setEmail($email);
+            $ObjUsuario->setContrasena($hashDeContrasena);
+            $ObjUsuario->setOrigenDeContrasena("USU");
+            //$ObjUsuario->actualizarContrasena();
+            //$ObjUsuario->actualizarOrigenDeContrasena();
+            
+            $response->getBody()->write("Se modificó contraseña correctamente");
             return $response;
         }
     }
