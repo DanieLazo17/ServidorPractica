@@ -86,8 +86,8 @@
             $ObjUsuario->setEmail($objetoUsuario->getEmail());
             $ObjUsuario->setContrasena($hashDeContrasena);
             $ObjUsuario->setOrigenDeContrasena("SIS");
-            //$ObjUsuario->actualizarContrasena();
-            //$ObjUsuario->actualizarOrigenDeContrasena();
+            $ObjUsuario->actualizarContrasena();
+            $ObjUsuario->actualizarOrigenDeContrasena();
             $asunto = "Clave de Acceso";
             $mensaje = "Su contraseña nueva es: " . $contrasenaNueva;
             /*
@@ -125,8 +125,8 @@
             $ObjUsuario->setEmail($email);
             $ObjUsuario->setContrasena($hashDeContrasena);
             $ObjUsuario->setOrigenDeContrasena("USU");
-            //$ObjUsuario->actualizarContrasena();
-            //$ObjUsuario->actualizarOrigenDeContrasena();
+            $ObjUsuario->actualizarContrasena();
+            $ObjUsuario->actualizarOrigenDeContrasena();
             
             $response->getBody()->write("Se modificó contraseña correctamente");
             return $response;
