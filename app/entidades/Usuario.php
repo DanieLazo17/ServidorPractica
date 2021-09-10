@@ -79,7 +79,7 @@
 
         public function obtenerPerfil(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idPerfil FROM perfilUsuario WHERE idUsuario = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idPerfil FROM perfilusuario WHERE idUsuario = ?");
             $consulta->execute(array($this->idUsuario));
 
             return $consulta->fetch(PDO::FETCH_ASSOC);

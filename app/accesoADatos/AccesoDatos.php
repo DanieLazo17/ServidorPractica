@@ -8,7 +8,8 @@
         private function __construct(){
             try {
                 //$this->objetoPDO = new PDO('mysql:host=remotemysql.com:3306;dbname=2PCWh7y5Lf;charset=utf8', '2PCWh7y5Lf', '09enEZGbMN', array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
-                $this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=gimnasio;charset=utf8', 'root', '', array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                //$this->objetoPDO = new PDO('mysql:host=localhost:3306;dbname=gimnasio;charset=utf8', 'root', '', array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
+                $this->objetoPDO = new PDO('mysql:host=bwwo94pvctucjofhltnh-mysql.services.clever-cloud.com:3306;dbname=bwwo94pvctucjofhltnh;charset=utf8', 'um1wx9ehfkot7w60', 'gT6WazDdGrEls5sKS7MB', array(PDO::ATTR_EMULATE_PREPARES => false, PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION));
                 $this->objetoPDO->exec("SET CHARACTER SET utf8");
             } catch (PDOException $e) {
                 print "Error: " . $e->getMessage();
