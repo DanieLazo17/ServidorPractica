@@ -49,11 +49,18 @@
             $nroSocio = $args['nroSocio'];
 
             $objeto = Socio::obtenerSocio($nroSocio);
-            $response->getBody()->write(json_encode($objeto));
+            $correo = Socio::obtenerCorreo($objeto['usuario']);
+            $objetoSocio = array_merge($objeto,$correo);
+            $response->getBody()->write(json_encode($objetoSocio));
    
             return $response->withHeader('Content-Type', 'application/json');
         }
 
+        public function InscribirAClase($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+
+            
+        }
     }
 
 ?>

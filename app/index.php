@@ -23,8 +23,12 @@
     require __DIR__ . '/entidades/Usuario.php';
     require __DIR__ . '/entidades/Administrativo.php';
     require __DIR__ . '/entidades/Socio.php';
+    require __DIR__ . '/entidades/TipoClase.php';
+    require __DIR__ . '/entidades/Clase.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
+    require __DIR__ . '/controlador/TipoClaseControlador.php';
+    require __DIR__ . '/controlador/ClaseControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -71,6 +75,16 @@
         $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
+        //Inscribir socio a clase
+        $grupoSocio->post("/Inscripcion/{nroSocio}[/]", \SocioControlador::class . ':InscribirAClase' );
+    });
+
+    $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
+        $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
+    });
+
+    $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
+        $grupoTipoClase->get("[/]", \TipoClaseControlador::class . ':RetornarTiposDeClases' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {

@@ -101,7 +101,7 @@
 
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre FROM socio");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
@@ -111,6 +111,14 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM socio WHERE nroSocio=?");
             $consulta->execute(array($nroSocio));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public static function obtenerCorreo($idUsuario){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT email FROM usuario WHERE idUsuario=?");
+            $consulta->execute(array($idUsuario));
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
