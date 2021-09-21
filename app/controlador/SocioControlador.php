@@ -57,9 +57,17 @@
         }
 
         public function InscribirAClase($request, $response, $args){
-            $nroSocio = $args['nroSocio'];
+            $listaDeParametros = $request->getParsedBody();
 
-            
+            $nroSocio = $listaDeParametros['nroSocio'];
+            $idClase = $listaDeParametros['idClase'];
+
+            $ObjetoSocio = new Socio();
+            $ObjetoSocio->setNroSocio($nroSocio);
+            $ObjetoSocio->guardarInscripcionAClase($idClase);
+
+            $response->getBody()->write("Se realizó inscripción correctamente");
+            return $response;
         }
     }
 

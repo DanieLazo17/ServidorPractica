@@ -76,7 +76,7 @@
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
         //Inscribir socio a clase
-        $grupoSocio->post("/Inscripcion/{nroSocio}[/]", \SocioControlador::class . ':InscribirAClase' );
+        $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
     });
 
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {

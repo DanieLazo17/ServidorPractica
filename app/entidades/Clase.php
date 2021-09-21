@@ -130,7 +130,7 @@
 
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase FROM clase WHERE tipoClase = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
             $consulta->execute(array($tipoClase));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
