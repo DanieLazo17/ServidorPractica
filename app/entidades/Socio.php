@@ -106,6 +106,28 @@
             return $consulta->execute(array($this->nroSocio, $idClase));
         }
 
+        public function obtenerSocio(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM socio WHERE nroSocio=?");
+            $consulta->execute(array($this->nroSocio));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function guardarDireccion(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE socio SET direccion = ?WHERE nroSocio = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->direccion, $this->nroSocio));
+        }
+
+        public function guardarTelefono(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE socio SET telefono = ? WHERE nroSocio = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->telefono, $this->nroSocio));
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");
@@ -114,12 +136,12 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public static function obtenerSocio($nroSocio){
+        public static function obtenerSociosParaGenerarCuotas(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM socio WHERE nroSocio=?");
-            $consulta->execute(array($nroSocio));
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, estado FROM socio");
+            $consulta->execute();
 
-            return $consulta->fetch(PDO::FETCH_ASSOC);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public static function obtenerCorreo($idUsuario){

@@ -17,8 +17,7 @@
         return $contrasenaAleatoria;
     }
 
-    function leerArchivoCorreo(){
-        
+    function leerArchivoCorreo(){   
         $archivo = fopen('correo.php',"r");
         $info = fread($archivo,filesize('correo.php'));
         fclose($archivo);

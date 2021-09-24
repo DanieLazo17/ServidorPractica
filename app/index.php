@@ -1,7 +1,6 @@
 <?php
-
-    session_start();    
-
+    date_default_timezone_set("America/Argentina/Buenos_Aires");
+    session_start();
     error_reporting(-1);
     ini_set('display_errors', 1);
 
@@ -25,10 +24,14 @@
     require __DIR__ . '/entidades/Socio.php';
     require __DIR__ . '/entidades/TipoClase.php';
     require __DIR__ . '/entidades/Clase.php';
+    require __DIR__ . '/entidades/Profesor.php';
+    require __DIR__ . '/entidades/Cuota.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/TipoClaseControlador.php';
     require __DIR__ . '/controlador/ClaseControlador.php';
+    require __DIR__ . '/controlador/ProfesorControlador.php';
+    require __DIR__ . '/controlador/CuotaControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -77,6 +80,9 @@
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
         //Inscribir socio a clase
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
+        $grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
+        $grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
+        $grupoSocio->post("/Pago[/]", \SocioControlador::class . ':PagarCuota' );
     });
 
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
@@ -85,6 +91,11 @@
 
     $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
         $grupoTipoClase->get("[/]", \TipoClaseControlador::class . ':RetornarTiposDeClases' );
+    });
+
+    $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
+        $grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotas' );
+        //$grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotasDeSocio' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {

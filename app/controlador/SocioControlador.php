@@ -31,6 +31,8 @@
             
             $ObjetoSocio->guardarSocio();
             $ObjetoSocio->agregarPerfil();
+            $CuotaControlador = new CuotaControlador();
+            $CuotaControlador->GenerarCuotasDeSocio($UltimoNro['nroSocio']);
             
             //$response->getBody()->write(json_encode($args));
             $SocioNuevo = array("nroSocio"=>$UltimoNro['nroSocio'], "contrasena"=>$UsuarioNuevo['contrasena']);
@@ -45,10 +47,18 @@
             return $response->withHeader('Content-Type', 'application/json');
         }
 
+        public function RetornarSociosParaGenerarCuotas(){  
+            $arregloSocios = Socio::obtenerSociosParaGenerarCuotas();
+   
+            return $arregloSocios;
+        }
+
         public function RetornarSocio($request, $response, $args){  
             $nroSocio = $args['nroSocio'];
 
-            $objeto = Socio::obtenerSocio($nroSocio);
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $objeto = $Socio->obtenerSocio();
             $correo = Socio::obtenerCorreo($objeto['usuario']);
             $objetoSocio = array_merge($objeto,$correo);
             $response->getBody()->write(json_encode($objetoSocio));
@@ -67,6 +77,38 @@
             $ObjetoSocio->guardarInscripcionAClase($idClase);
 
             $response->getBody()->write("Se realizó inscripción correctamente");
+            return $response;
+        }
+
+        public function PagarCuota($request, $response, $args){
+            
+        }
+
+        public function ActualizarDireccion($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $direccion = $listaDeParametros['direccion'];
+            $nroSocio = $args['nroSocio'];
+            
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $Socio->setDireccion($direccion);
+            $Socio->guardarDireccion();
+
+            $response->getBody()->write("Se actualizó dirección personal correctamente");
+            return $response;
+        }
+
+        public function ActualizarTelefono($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $telefono = $listaDeParametros['telefono'];
+            $nroSocio = $args['nroSocio'];
+            
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $Socio->setTelefono($telefono);
+            $Socio->guardarTelefono();
+
+            $response->getBody()->write("Se actualizó telfono personal correctamente");
             return $response;
         }
     }

@@ -1,20 +1,21 @@
 <?php
 
-    class Administrativo{
-        private $dni;
+    class Profesor{
+        private $legajo;
         private $nombre;
         private $apellido;
         private $direccion;
         private $telefono;
+        private $especialidad;
         private $usuario;
 
         function __construct(){
             
         }
 
-        function setDni($dni){
+        function setLegajo($legajo){
             
-            $this->dni = $dni;
+            $this->legajo = $legajo;
         }
 
         function setNombre($nombre){
@@ -37,14 +38,19 @@
             $this->telefono = $telefono;
         }
 
+        function setEspecialidad($especialidad){
+            
+            $this->especialidad = $especialidad;
+        }
+
         function setUsuario($usuario){
             
             $this->usuario = $usuario;
         }
 
-        function getDni(){
+        function getLegajo(){
             
-            return $this->dni;
+            return $this->legajo;
         }
 
         function getNombre(){
@@ -67,10 +73,14 @@
             return $this->telefono;
         }
 
+        function getEspecialidad(){
+            
+            return $this->especialidad;
+        }
+
         function getUsuario(){
             
             return $this->usuario;
         }
     }
-
 ?>
