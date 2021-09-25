@@ -26,12 +26,14 @@
     require __DIR__ . '/entidades/Clase.php';
     require __DIR__ . '/entidades/Profesor.php';
     require __DIR__ . '/entidades/Cuota.php';
+    require __DIR__ . '/entidades/Pago.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/TipoClaseControlador.php';
     require __DIR__ . '/controlador/ClaseControlador.php';
     require __DIR__ . '/controlador/ProfesorControlador.php';
     require __DIR__ . '/controlador/CuotaControlador.php';
+    require __DIR__ . '/controlador/PagoControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -96,6 +98,10 @@
     $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
         $grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotas' );
         //$grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotasDeSocio' );
+    });
+
+    $app->group("/Pago", function (RouteCollectorProxy $grupoPago) {
+        $grupoPago->post("[/]", \PagoControlador::class . ':PagarCuotas' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {

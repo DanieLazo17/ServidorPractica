@@ -9,6 +9,7 @@
         private $telefono;
         private $estado;
         private $usuario;
+        private $fechaDeAlta;
 
         function __construct(){
             
@@ -49,6 +50,11 @@
             $this->usuario = $usuario;
         }
 
+        function setFechaDeAlta($fechaDeAlta){
+            
+            $this->fechaDeAlta = $fechaDeAlta;
+        }
+
         function getNroSocio(){
             
             return $this->nroSocio;
@@ -84,11 +90,16 @@
             return $this->usuario;
         }
 
+        function getFechaDeAlta(){
+            
+            return $this->fechaDeAlta;
+        }
+
         public function guardarSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socio(nroSocio, nombre, apellido, direccion, telefono, usuario) VALUES (?,?,?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socio(nroSocio, nombre, apellido, direccion, telefono, usuario, fechaDeAlta) VALUES (?,?,?,?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->usuario));
+            return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->usuario, $this->fechaDeAlta));
         }
 
         public function agregarPerfil(){

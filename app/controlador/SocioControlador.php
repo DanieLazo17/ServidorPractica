@@ -20,6 +20,7 @@
             $nombre = ucwords($nombre);
             $apellido = ucwords($apellido);
             $direccion = ucwords($direccion);
+            $fechaActual = date("Y/m/d");
 
             $ObjetoSocio = new Socio();
             $ObjetoSocio->setNroSocio($UltimoNro['nroSocio']);
@@ -28,6 +29,7 @@
             $ObjetoSocio->setDireccion($direccion);
             $ObjetoSocio->setTelefono($telefono);
             $ObjetoSocio->setUsuario($idUsuario);
+            $ObjetoSocio->setFechaDeAlta($fechaActual);
             
             $ObjetoSocio->guardarSocio();
             $ObjetoSocio->agregarPerfil();
