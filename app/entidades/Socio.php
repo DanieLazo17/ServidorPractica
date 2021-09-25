@@ -104,7 +104,7 @@
 
         public function agregarPerfil(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO perfilUsuario(idUsuario, idPerfil) VALUES (?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO perfilusuario(idUsuario, idPerfil) VALUES (?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
             $idPerfil = "SOC";
             return $consulta->execute(array($this->usuario, $idPerfil));
