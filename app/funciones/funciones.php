@@ -8,12 +8,21 @@
 
     function generarContrasenaAleatoria(){
         $caracteresAlfanumericos = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+        $caracteresNumericos = "1234567890";
         $contrasenaAleatoria = null;
-        
-        for($i=0; $i<8; $i++) {
+
+        for($i=0; $i<2; $i++) {
             $contrasenaAleatoria .= substr($caracteresAlfanumericos, rand(0,61), 1);
         }
-
+        for($i=0; $i<2; $i++) {
+            $contrasenaAleatoria .= substr($caracteresNumericos, rand(0,9), 1);
+        }
+        for($i=0; $i<3; $i++) {
+            $contrasenaAleatoria .= substr($caracteresAlfanumericos, rand(0,61), 1);
+        }
+        for($i=0; $i<1; $i++) {
+            $contrasenaAleatoria .= substr($caracteresNumericos, rand(0,9), 1);
+        }
         return $contrasenaAleatoria;
     }
 
