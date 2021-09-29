@@ -80,8 +80,8 @@
         $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
-        //Inscribir socio a clase
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
+        //Actualizar Socio
         $grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         $grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
         $grupoSocio->post("/Pago[/]", \SocioControlador::class . ':PagarCuota' );
@@ -98,6 +98,7 @@
     $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
         $grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotas' );
         //$grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotasDeSocio' );
+        $grupoCuota->get("/{nroSocio}[/]", \CuotaControlador::class . ':ObtenerCuotasDeSocio' );
     });
 
     $app->group("/Pago", function (RouteCollectorProxy $grupoPago) {

@@ -2,12 +2,13 @@
 
     class Cuota{
 
-        public $idCuota;
-        public $mes;
-        public $socio;
-        public $importe;
-        public $fechaEmision;
-        public $fechaVencimiento;
+        private $idCuota;
+        private $mes;
+        private $socio;
+        private $importe;
+        private $fechaEmision;
+        private $fechaVencimiento;
+        private $estado;
 
         function __construct(){
 
@@ -43,6 +44,11 @@
             $this->fechaVencimiento = $fechaVencimiento;
         }
 
+        function setEstado($estado){    
+             
+            $this->estado = $estado;
+        }
+
         function getIdCuota(){
             
             return $this->idCuota;
@@ -73,11 +79,28 @@
             return $this->fechaVencimiento;
         }
 
+        function getEstado(){
+            
+            return $this->estado;
+        }
+
         public function guardarCuotasDeSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(mes, socio, importe, fechaEmision, fechaVencimiento) VALUES (?,?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(mes, socio, importe, fechaEmision, fechaVencimiento, estado) VALUES (?,?,?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->mes, $this->socio, $this->importe, $this->fechaEmision, $this->fechaVencimiento));
+            return $consulta->execute(array($this->mes, $this->socio, $this->importe, $this->fechaEmision, $this->fechaVencimiento, $this->estado));
+        }
+
+        public function actualizarEstadoDeCuotas(){
+            
+        }
+
+        public function obtenerCuotasEmitOVenc(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, mes, importe, fechaVencimiento, estado FROM cuota WHERE socio=?");
+            $consulta->execute(array($this->socio));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>
