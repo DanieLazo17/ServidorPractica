@@ -87,6 +87,7 @@
         }
 
         public function RegistrarPago($request, $response, $args, $pago){
+            $listaDeParametros = $request->getParsedBody();
             $cuotas = $listaDeParametros['cuotas'];
             $arregloDeCuotas = json_decode($cuotas);
             $estado = "Pagada";
