@@ -20,8 +20,8 @@
             $CuotaControlador->RegistrarPago($request, $response, $args, $UltimoNro['nroPago']);
 
             //Devolver nroPago en write("Mensaje")
-            $response->getBody()->write(json_encode($arregloDeCuotas));
-            return $response->withHeader('Content-Type', 'application/json');
+            $response->getBody()->write("Su número de pago es: " . $UltimoNro['nroPago']);
+            return $response;
         }
     }
 ?>
