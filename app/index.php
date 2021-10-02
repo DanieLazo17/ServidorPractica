@@ -82,8 +82,9 @@
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
         //Actualizar Socio
-        $grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
-        $grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
+        //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
+        //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
+        $grupoSocio->post("/Actualizacion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDatos' );
         $grupoSocio->post("/Pago[/]", \SocioControlador::class . ':PagarCuota' );
     });
 

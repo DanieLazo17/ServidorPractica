@@ -85,5 +85,21 @@
    
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RegistrarPago($request, $response, $args, $pago){
+            $cuotas = $listaDeParametros['cuotas'];
+            $arregloDeCuotas = json_decode($cuotas);
+            $estado = "Pagada";
+
+            for($i = 0; $i < count($arregloDeCuotas); ++$i){
+                $Cuota = new Cuota();
+                $Cuota->setIdCuota($arregloDeCuotas[$i]);
+                $Cuota->setEstado($estado);
+                $Cuota->setPago($pago);
+                $Cuota->actualizarPagoDeCuota();
+            }
+
+            return;
+        }
     }
 ?>

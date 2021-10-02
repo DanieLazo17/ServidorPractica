@@ -139,6 +139,13 @@
             return $consulta->execute(array($this->telefono, $this->nroSocio));
         }
 
+        public function actualizarDatosSocio(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE socio SET nombre = ?, apellido = ?, direccion = ?, telefono = ? WHERE nroSocio = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->nroSocio));
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");

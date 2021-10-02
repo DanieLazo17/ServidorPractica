@@ -86,6 +86,26 @@
             
         }
 
+        public function ActualizarDatos($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $nombre = $listaDeParametros['nombre'];
+            $apellido = $listaDeParametros['apellido'];
+            $direccion = $listaDeParametros['direccion'];
+            $telefono = $listaDeParametros['telefono'];
+            $nroSocio = $args['nroSocio'];
+            
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $Socio->setNombre($nombre);
+            $Socio->setApellido($apellido);
+            $Socio->setDireccion($direccion);
+            $Socio->setTelefono($telefono);
+            $Socio->actualizarDatosSocio();
+
+            $response->getBody()->write("Se actualizó datos correctamente");
+            return $response;
+        }
+
         public function ActualizarDireccion($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $direccion = $listaDeParametros['direccion'];

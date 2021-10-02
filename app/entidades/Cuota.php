@@ -9,6 +9,7 @@
         private $fechaEmision;
         private $fechaVencimiento;
         private $estado;
+        private $pago;
 
         function __construct(){
 
@@ -49,6 +50,11 @@
             $this->estado = $estado;
         }
 
+        function setPago($pago){    
+             
+            $this->pago = $pago;
+        }
+
         function getIdCuota(){
             
             return $this->idCuota;
@@ -84,6 +90,11 @@
             return $this->estado;
         }
 
+        function getPago(){
+            
+            return $this->pago;
+        }
+
         public function guardarCuotasDeSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(mes, socio, importe, fechaEmision, fechaVencimiento, estado) VALUES (?,?,?,?,?,?)");
@@ -92,15 +103,26 @@
         }
 
         public function actualizarEstadoDeCuotas(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ? WHERE socio = ? AND CURRENT_DATE > fechaVencimiento");
+            $estado = "Impaga";
             
+            return $consulta->execute(array($estado, $this->socio));
         }
 
         public function obtenerCuotasEmitOVenc(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, mes, importe, fechaVencimiento, estado FROM cuota WHERE socio=?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, mes, importe, fechaVencimiento, estado FROM cuota WHERE socio=? AND (estado='Emitida' OR estado='Impaga')");
             $consulta->execute(array($this->socio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function actualizarPagoDeCuota(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ?, pago = ? WHERE idCuota = ?");
+            
+            return $consulta->execute(array($this->estado, $this->pago, $this->idCuota));
         }
     }
 ?>
