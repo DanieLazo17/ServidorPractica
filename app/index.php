@@ -85,7 +85,7 @@
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
         $grupoSocio->post("/Actualizacion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDatos' );
-        $grupoSocio->post("/Pago[/]", \SocioControlador::class . ':PagarCuota' );
+        $grupoSocio->post("/Borrar/{nroSocio}[/]", \SocioControlador::class . ':DeshabilitarSocio' );
     });
 
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {

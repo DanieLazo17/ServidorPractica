@@ -82,10 +82,6 @@
             return $response;
         }
 
-        public function PagarCuota($request, $response, $args){
-            
-        }
-
         public function ActualizarDatos($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $nombre = $listaDeParametros['nombre'];
@@ -130,7 +126,20 @@
             $Socio->setTelefono($telefono);
             $Socio->guardarTelefono();
 
-            $response->getBody()->write("Se actualizó telfono personal correctamente");
+            $response->getBody()->write("Se actualizó teléfono personal correctamente");
+            return $response;
+        }
+
+        public function DeshabilitarSocio($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+            $estado = "DESHAB";
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $Socio->setEstado($estado);
+            $Socio->suspenderSocio();
+
+            $response->getBody()->write("Se deshabilitó socio");
             return $response;
         }
     }

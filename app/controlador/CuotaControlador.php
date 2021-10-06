@@ -49,28 +49,26 @@
             foreach($arregloSocios as $objetoSocio){
 
                 foreach($objetoSocio as $atr => $valueAtr){
-                    if($atr == 'nroSocio'){
-                        $Cuota = new Cuota();
-                        $Cuota->setSocio($valueAtr);
-                        $Cuota->setImporte($importe);
-                        $Cuota->setFechaEmision($fechaActual);
-                        $Cuota->setEstado($estado);
+                    $Cuota = new Cuota();
+                    $Cuota->setSocio($valueAtr);
+                    $Cuota->setImporte($importe);
+                    $Cuota->setFechaEmision($fechaActual);
+                    $Cuota->setEstado($estado);
                         
-                        for($i = $mes; $i <= 12; ++$i){
-                            $mesDeCuota = date_create_from_format("n",$i);
-                            $fechaDeVencimiento = date_create($anio ."-". (string)$i ."-". (string)10);
-                            
-                            $Cuota->setMes(date_format($mesDeCuota,"M"));
-                            $Cuota->setFechaVencimiento(date_format($fechaDeVencimiento,"Y/m/d"));
-                            $Cuota->guardarCuotasDeSocio();
-                        }
+                    for($i = $mes; $i <= 12; ++$i){
+                        $mesDeCuota = date_create_from_format("n",$i);
+                        $fechaDeVencimiento = date_create($anio ."-". (string)$i ."-". (string)10);
+                        
+                        $Cuota->setMes(date_format($mesDeCuota,"M"));
+                        $Cuota->setFechaVencimiento(date_format($fechaDeVencimiento,"Y/m/d"));
+                        $Cuota->guardarCuotasDeSocio();
                     }
                 }
             }
             
             $response->getBody()->write("Se generó cuotas correctamente");
             return $response;
-            //$response->getBody()->write(json_encode($Cuota));
+            //$response->getBody()->write(json_encode($arreglo));
             //return $response->withHeader('Content-Type', 'application/json');
         }
 
