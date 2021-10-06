@@ -21,6 +21,7 @@
             $apellido = ucwords($apellido);
             $direccion = ucwords($direccion);
             $fechaActual = date("Y/m/d");
+            $estado = "HAB";
 
             $ObjetoSocio = new Socio();
             $ObjetoSocio->setNroSocio($UltimoNro['nroSocio']);
@@ -28,6 +29,7 @@
             $ObjetoSocio->setApellido($apellido);
             $ObjetoSocio->setDireccion($direccion);
             $ObjetoSocio->setTelefono($telefono);
+            $ObjetoSocio->setEstado($estado);
             $ObjetoSocio->setUsuario($idUsuario);
             $ObjetoSocio->setFechaDeAlta($fechaActual);
             

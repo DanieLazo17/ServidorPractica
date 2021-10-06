@@ -97,9 +97,9 @@
 
         public function guardarSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socio(nroSocio, nombre, apellido, direccion, telefono, usuario, fechaDeAlta) VALUES (?,?,?,?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socio(nroSocio, nombre, apellido, direccion, telefono, estado, usuario, fechaDeAlta) VALUES (?,?,?,?,?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->usuario, $this->fechaDeAlta));
+            return $consulta->execute(array($this->nroSocio, $this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->estado , $this->usuario, $this->fechaDeAlta));
         }
 
         public function agregarPerfil(){
