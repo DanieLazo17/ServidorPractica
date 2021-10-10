@@ -97,6 +97,7 @@
     });
 
     $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
+        $grupoCuota->get("/Estado/{nroSocio}[/]", \CuotaControlador::class . ':ObtenerEstadoDeCuotas' );
         $grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotas' );
         //$grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotasDeSocio' );
         $grupoCuota->get("/{nroSocio}[/]", \CuotaControlador::class . ':ObtenerCuotasDeSocio' );

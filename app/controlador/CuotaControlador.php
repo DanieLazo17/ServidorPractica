@@ -100,5 +100,15 @@
 
             return;
         }
+
+        public function ObtenerEstadoDeCuotas($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+            $Cuota = new Cuota();
+            $Cuota->setSocio($nroSocio);
+            $arregloCuotas = $Cuota->obtenerCuotasEmitOVenc();
+
+            $response->getBody()->write(json_encode($arregloCuotas));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 ?>
