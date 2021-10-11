@@ -117,7 +117,6 @@
         $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
     });
 
-    
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
         $grupoSalon->get("[/]", \SalonControlador::class . ':RetornarSalones' );
     });
