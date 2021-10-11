@@ -82,5 +82,29 @@
             
             return $this->usuario;
         }
+
+        public function obtenerProfesor(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM profesor WHERE legajo=?");
+            $consulta->execute(array($this->legajo));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function obtenerCorreo(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT email FROM usuario WHERE idUsuario=?");
+            $consulta->execute(array($this->usuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public static function obtenerProfesores(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT legajo, nombre, apellido FROM profesor");
+            $consulta->execute();
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

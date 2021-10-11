@@ -107,6 +107,11 @@
         $grupoPago->post("[/]", \PagoControlador::class . ':PagarCuotas' );
     });
 
+    $app->group("/Profesor", function (RouteCollectorProxy $grupoProfesor) {
+        $grupoProfesor->get("[/]", \ProfesorControlador::class . ':RetornarProfesores' );
+        $grupoProfesor->get("/{legajo}[/]", \ProfesorControlador::class . ':RetornarProfesor' );
+    });
+
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
         $name = $args['name'];
         $response->getBody()->write("Hello, $name");
