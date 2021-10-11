@@ -91,6 +91,11 @@
             $direccion = $listaDeParametros['direccion'];
             $telefono = $listaDeParametros['telefono'];
             $nroSocio = $args['nroSocio'];
+
+            //Normalizar datos
+            $nombre = ucwords($nombre);
+            $apellido = ucwords($apellido);
+            $direccion = ucwords($direccion);
             
             $Socio = new Socio();
             $Socio->setNroSocio($nroSocio);

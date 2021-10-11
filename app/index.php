@@ -108,8 +108,11 @@
     });
 
     $app->group("/Profesor", function (RouteCollectorProxy $grupoProfesor) {
+        $grupoProfesor->post("/Registro[/]", \ProfesorControlador::class . ':RegistrarProfesor' );
         $grupoProfesor->get("[/]", \ProfesorControlador::class . ':RetornarProfesores' );
         $grupoProfesor->get("/{legajo}[/]", \ProfesorControlador::class . ':RetornarProfesor' );
+        $grupoProfesor->post("/Especialidad[/]", \ProfesorControlador::class . ':TraerProfesoresPorEsp' );
+        $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
