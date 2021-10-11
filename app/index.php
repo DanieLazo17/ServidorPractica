@@ -27,6 +27,7 @@
     require __DIR__ . '/entidades/Profesor.php';
     require __DIR__ . '/entidades/Cuota.php';
     require __DIR__ . '/entidades/Pago.php';
+    require __DIR__ . '/entidades/Salon.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/TipoClaseControlador.php';
@@ -34,6 +35,7 @@
     require __DIR__ . '/controlador/ProfesorControlador.php';
     require __DIR__ . '/controlador/CuotaControlador.php';
     require __DIR__ . '/controlador/PagoControlador.php';
+    require __DIR__ . '/controlador/SalonControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -113,6 +115,11 @@
         $grupoProfesor->get("/{legajo}[/]", \ProfesorControlador::class . ':RetornarProfesor' );
         $grupoProfesor->post("/Especialidad[/]", \ProfesorControlador::class . ':TraerProfesoresPorEsp' );
         $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
+    });
+
+    
+    $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
+        $grupoSalon->get("[/]", \SalonControlador::class . ':RetornarSalones' );
     });
 
     $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
