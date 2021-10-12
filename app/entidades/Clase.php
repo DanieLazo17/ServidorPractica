@@ -128,12 +128,29 @@
             return $this->modalidad;
         }
 
+        public function buscarClases(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon FROM clase AS c, profesor AS p, salon AS s WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND dias LIKE ?");
+            $dias = "%".$this->dias."%";
+            $consulta->execute(array($dias));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
             $consulta->execute(array($tipoClase));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public static function obtenerUltimoNroClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(idClase) AS idClase FROM clase");
+            $consulta->execute();
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
         }
     }
 ?>

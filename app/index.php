@@ -90,12 +90,14 @@
         $grupoSocio->post("/Borrar/{nroSocio}[/]", \SocioControlador::class . ':DeshabilitarSocio' );
     });
 
-    $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
-        $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
-    });
-
     $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
         $grupoTipoClase->get("[/]", \TipoClaseControlador::class . ':RetornarTiposDeClases' );
+    });
+
+    $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
+        $grupoClase->post("/Registro[/]", \ClaseControlador::class . ':RegistrarClase' );
+        $grupoClase->post("/EnCurso[/]", \ClaseControlador::class . ':RetornarClasesEnCurso' );
+        $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
     });
 
     $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
