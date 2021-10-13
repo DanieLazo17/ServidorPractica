@@ -128,6 +128,13 @@
             return $this->modalidad;
         }
 
+        public function guardarClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO clase(idClase, tipoClase, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, profesor, salon, cupos, modalidad) VALUES (?,?,?,?,?,?,?,?,?,?,?)");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->idClase, $this->tipoClase, $this->dias, $this->horaDeInicio, $this->horaDeFin, $this->fechaDeInicio , $this->fechaDeFin, $this->profesor, $this->salon, $this->cupos, $this->modalidad));
+        }
+
         public function buscarClases(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon FROM clase AS c, profesor AS p, salon AS s WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND dias LIKE ?");

@@ -17,6 +17,20 @@
             $profesor = $listaDeParametros['profesor'];
             $salon = $listaDeParametros['salon'];
 
+            $Clase = new Clase();
+            $Clase->setIdClase($UltimoNroClase['idClase']);
+            $Clase->setTipoClase($tipoClase);
+            $Clase->setDias($dias);
+            $Clase->setHoraDeInicio($horaDeInicio);
+            $Clase->setHoraDeFin($horaDeFin);
+            $Clase->setFechaDeInicio($fechaDeInicio);
+            $Clase->setFechaDeFin($fechaDeFin);
+            $Clase->setProfesor($profesor);
+            $Clase->setSalon($salon);
+            $Clase->setCupos($cupos);
+            $Clase->setModalidad($modalidad);
+            $Clase->guardarClase();
+
             $ClaseNueva = array("idClase"=>$UltimoNroClase['idClase']);
             $response->getBody()->write("Clase generada correctamente.");
             return $response;
