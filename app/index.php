@@ -97,6 +97,7 @@
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
         $grupoClase->post("/Registro[/]", \ClaseControlador::class . ':RegistrarClase' );
         $grupoClase->post("/EnCurso[/]", \ClaseControlador::class . ':RetornarClasesEnCurso' );
+        $grupoClase->get("/Profesor/{legajo}[/]", \ClaseControlador::class . ':RetornarClasesDelProfesor' );
         $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
     });
 

@@ -56,5 +56,16 @@
             $response->getBody()->write(json_encode($arregloDeClases));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarClasesDelProfesor($request, $response, $args){
+            $legajo = $args['legajo'];
+
+            $Clase = new Clase();
+            $Clase->setProfesor($legajo);
+            $arregloDeClases = $Clase->obtenerClasesDelProfesor();
+
+            $response->getBody()->write(json_encode($arregloDeClases));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 ?>
