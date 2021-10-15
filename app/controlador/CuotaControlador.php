@@ -105,6 +105,7 @@
             $nroSocio = $args['nroSocio'];
             $Cuota = new Cuota();
             $Cuota->setSocio($nroSocio);
+            $Cuota->actualizarEstadoDeCuotas();
             $arregloCuotas = $Cuota->obtenerCuotasEmitOVenc();
 
             $response->getBody()->write(json_encode($arregloCuotas));
