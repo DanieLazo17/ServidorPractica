@@ -28,6 +28,8 @@
     require __DIR__ . '/entidades/Cuota.php';
     require __DIR__ . '/entidades/Pago.php';
     require __DIR__ . '/entidades/Salon.php';
+    require __DIR__ . '/entidades/Producto.php';
+    require __DIR__ . '/entidades/Venta.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/TipoClaseControlador.php';
@@ -36,6 +38,9 @@
     require __DIR__ . '/controlador/CuotaControlador.php';
     require __DIR__ . '/controlador/PagoControlador.php';
     require __DIR__ . '/controlador/SalonControlador.php';
+    require __DIR__ . '/controlador/ProductoControlador.php';
+    require __DIR__ . '/controlador/VentaControlador.php';
+    require __DIR__ . '/controlador/AdministrativoControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -78,12 +83,15 @@
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 
+    $app->group("/Administrativo", function (RouteCollectorProxy $grupoAdministrativo) {
+        $grupoAdministrativo->post("/Perfil[/]", \AdministrativoControlador::class . ':RetornarPerfil' );
+    });
+
     $app->group("/Socio", function (RouteCollectorProxy $grupoSocio) {
         $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
-        //Actualizar Socio
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
         $grupoSocio->post("/Actualizacion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDatos' );
@@ -122,12 +130,6 @@
 
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
         $grupoSalon->get("[/]", \SalonControlador::class . ':RetornarSalones' );
-    });
-
-    $app->post('/hello/{name}', function (Request $request, Response $response, array $args) {
-        $name = $args['name'];
-        $response->getBody()->write("Hello, $name");
-        return $response;
     });
 
     $app->run();

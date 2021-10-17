@@ -19,19 +19,15 @@
             }
     
             if($objetoUsuario->compararContrasena($listaDeParametros['pass'])){
-                //SesionControlador::Iniciar($listaDeParametros['email']);
                 $idDePerfil = $objetoUsuario->obtenerPerfil();
-
                 $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
-                //$response->getBody()->write("Acceso correcto");
             }
             else{
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
-                //$response->getBody()->write("Contraseña incorrecta");
             }
+            
             return $response->withHeader('Content-Type', 'application/json');
-            //return $response;
         }
 
         public function ComprobarCorreo($request, $response, $args){
@@ -113,14 +109,7 @@
             $contrasenaNueva = $listaDeParametros['contrasenaNueva'];
 
             $hashDeContrasena = password_hash($contrasenaNueva, PASSWORD_DEFAULT);
-            /*
-            $objetoUsuario = Usuario::buscarCorreo($listaDeParametros['email']);
-
-            if(!$objetoUsuario){
-                $response->getBody()->write("No existe correo");
-                return $response;
-            }
-            */
+            
             $ObjUsuario = new Usuario();
             $ObjUsuario->setEmail($email);
             $ObjUsuario->setContrasena($hashDeContrasena);
@@ -130,6 +119,17 @@
             
             $response->getBody()->write("Se modificó contraseña correctamente");
             return $response;
+        }
+
+        public function BuscarPorCorreo($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $email = $listaDeParametros['email'];
+
+            $ObjetoUsuario = new Usuario();
+            $ObjetoUsuario->setEmail($email);
+            $Usuario = $ObjetoUsuario->obtenerId();
+
+            return $Usuario;
         }
     }
 

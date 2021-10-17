@@ -52,7 +52,6 @@
         }
 
         public function compararContrasena($contrasenaIngresada){
-            
             return password_verify($contrasenaIngresada, $this->getContrasena());
         }
 
@@ -81,6 +80,14 @@
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idPerfil FROM perfilusuario WHERE idUsuario = ?");
             $consulta->execute(array($this->idUsuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public function obtenerId(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario FROM usuario WHERE email = ?");
+            $consulta->execute(array($this->email));
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
