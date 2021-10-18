@@ -85,6 +85,7 @@
 
     $app->group("/Administrativo", function (RouteCollectorProxy $grupoAdministrativo) {
         $grupoAdministrativo->post("/Perfil[/]", \AdministrativoControlador::class . ':RetornarPerfil' );
+        $grupoAdministrativo->post("/ModificacionDePerfil[/]", \AdministrativoControlador::class . ':ActualizarDatos' );
     });
 
     $app->group("/Socio", function (RouteCollectorProxy $grupoSocio) {

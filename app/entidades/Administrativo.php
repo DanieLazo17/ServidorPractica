@@ -87,6 +87,13 @@
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
+
+        public function actualizarDatosAdministrativo(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE administrativo SET nombre = ?, apellido = ?, direccion = ?, telefono = ? WHERE dni = ?");
+            
+            return $consulta->execute(array($this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->dni));
+        }
     }
 
 ?>

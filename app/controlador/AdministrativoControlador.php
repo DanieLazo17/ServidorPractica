@@ -19,5 +19,30 @@
    
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function ActualizarDatos($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $dni = $listaDeParametros['dni'];
+            $nombre = $listaDeParametros['nombre'];
+            $apellido = $listaDeParametros['apellido'];
+            $direccion = $listaDeParametros['direccion'];
+            $telefono = $listaDeParametros['telefono'];
+
+            //Normalizar datos
+            $nombre = ucwords($nombre);
+            $apellido = ucwords($apellido);
+            $direccion = ucwords($direccion);
+            
+            $Administrativo = new Administrativo();
+            $Administrativo->setDni($dni);
+            $Administrativo->setNombre($nombre);
+            $Administrativo->setApellido($apellido);
+            $Administrativo->setDireccion($direccion);
+            $Administrativo->setTelefono($telefono);
+            $Administrativo->actualizarDatosAdministrativo();
+
+            $response->getBody()->write("Se actualizó datos correctamente");
+            return $response;
+        }
     }
 ?>
