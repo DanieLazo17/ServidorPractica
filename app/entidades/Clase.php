@@ -152,6 +152,13 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function actualizarDatosClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE clase SET dias = ?, horaDeInicio = ?, horaDeFin = ?, fechaDeInicio = ?, fechaDeFin = ?, profesor = ?, salon = ?, cupos = ?, modalidad = ? WHERE idClase = ?");
+            
+            return $consulta->execute(array($this->dias, $this->horaDeInicio, $this->horaDeFin, $this->fechaDeInicio , $this->fechaDeFin, $this->profesor, $this->salon, $this->cupos, $this->modalidad, $this->idClase));
+        }
+
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
@@ -166,6 +173,14 @@
             $consulta->execute();
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
+        public static function obtenerClases(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase");
+            $consulta->execute();
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
     }
 ?>

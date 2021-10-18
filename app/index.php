@@ -106,8 +106,10 @@
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
         $grupoClase->post("/Registro[/]", \ClaseControlador::class . ':RegistrarClase' );
         $grupoClase->post("/EnCurso[/]", \ClaseControlador::class . ':RetornarClasesEnCurso' );
+        $grupoClase->post("/Actualizacion/{idClase}[/]", \ClaseControlador::class . ':ActualizarDatos' );
         $grupoClase->get("/Profesor/{legajo}[/]", \ClaseControlador::class . ':RetornarClasesDelProfesor' );
         $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
+        $grupoClase->get("[/]", \ClaseControlador::class . ':RetornarClases' );
     });
 
     $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {

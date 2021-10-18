@@ -67,5 +67,46 @@
             $response->getBody()->write(json_encode($arregloDeClases));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarClases($request, $response, $args){
+            $arregloDeClases = Clase::obtenerClases();
+            $response->getBody()->write(json_encode($arregloDeClases));
+   
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        public function ActualizarDatos($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $idClase = $args['idClase'];
+            $modalidad = $listaDeParametros['modalidad'];
+            $dias = $listaDeParametros['dias'];
+            $horaDeInicio = $listaDeParametros['horaDeInicio'];
+            $horaDeFin = $listaDeParametros['horaDeFin'];
+            $fechaDeInicio = $listaDeParametros['fechaDeInicio'];
+            $fechaDeFin = $listaDeParametros['fechaDeFin'];
+            $cupos = $listaDeParametros['cupos'];
+            $profesor = $listaDeParametros['profesor'];
+            $salon = $listaDeParametros['salon'];
+
+            //Normalizar datos
+            $dias = ucwords($dias);
+            $modalidad = ucwords($modalidad);
+            
+            $Clase = new Clase();
+            $Clase->setIdClase($idClase);
+            $Clase->setDias($dias);
+            $Clase->setHoraDeInicio($horaDeInicio);
+            $Clase->setHoraDeFin($horaDeFin);
+            $Clase->setFechaDeInicio($fechaDeInicio);
+            $Clase->setFechaDeFin($fechaDeFin);
+            $Clase->setProfesor($profesor);
+            $Clase->setSalon($salon);
+            $Clase->setCupos($cupos);
+            $Clase->setModalidad($modalidad);
+            $Clase->actualizarDatosClase();
+
+            $response->getBody()->write("Se actualizó datos correctamente");
+            return $response;
+        }
     }
 ?>
