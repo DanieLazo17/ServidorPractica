@@ -97,6 +97,17 @@
             $response->getBody()->write("Se actualizó datos correctamente");
             return $response;
         }
+
+        public function RetornarClasesACargo($request, $response, $args){
+            $legajo = $args['legajo'];
+
+            $Profesor = new Profesor();
+            $Profesor->setLegajo($legajo);
+            $arregloClases = $Profesor->obtenerClasesDeProfesor();
+
+            $response->getBody()->write(json_encode($arregloClases));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

@@ -92,6 +92,7 @@
         $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
+        $grupoSocio->get("/Clase/{nroSocio}[/]", \SocioControlador::class . ':RetornarClasesEnCurso' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
@@ -127,6 +128,7 @@
         $grupoProfesor->post("/Registro[/]", \ProfesorControlador::class . ':RegistrarProfesor' );
         $grupoProfesor->get("[/]", \ProfesorControlador::class . ':RetornarProfesores' );
         $grupoProfesor->get("/{legajo}[/]", \ProfesorControlador::class . ':RetornarProfesor' );
+        $grupoProfesor->get("/Clase/{legajo}[/]", \ProfesorControlador::class . ':RetornarClasesACargo' );
         $grupoProfesor->post("/Especialidad[/]", \ProfesorControlador::class . ':TraerProfesoresPorEsp' );
         $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
     });

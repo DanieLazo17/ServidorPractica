@@ -149,6 +149,17 @@
             $response->getBody()->write("Se deshabilitó socio");
             return $response;
         }
+
+        public function RetornarClasesEnCurso($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $arregloClases = $Socio->obtenerClasesEnCurso();
+
+            $response->getBody()->write(json_encode($arregloClases));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

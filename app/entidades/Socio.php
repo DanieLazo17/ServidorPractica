@@ -153,6 +153,14 @@
             return $consulta->execute(array($this->estado, $this->nroSocio));
         }
 
+        public function obtenerClasesEnCurso(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon FROM clase AS c, salon AS s, tipoclase AS tc, profesor AS p, socioclase AS sc WHERE c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.profesor = p.legajo AND c.idClase = sc.clase AND sc.socio = ?");
+            $consulta->execute(array($this->nroSocio));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");

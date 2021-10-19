@@ -152,6 +152,14 @@
             return $consulta->execute(array($this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->especialidad, $this->legajo));
         }
 
+        public function obtenerClasesDeProfesor(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, s.nombreSalon AS salon, cupos FROM clase AS c, salon AS s, tipoclase AS tc WHERE c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.profesor = ?");
+            $consulta->execute(array($this->legajo));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerUltimoLegajo(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(legajo) AS legajo FROM profesor");
