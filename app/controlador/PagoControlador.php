@@ -7,6 +7,9 @@
             $importe = $listaDeParametros['importe'];
             $fechaActual = date("Y/m/d");
 
+            //Normalizar datos
+            $importe = (float)$importe;
+
             $UltimoNro = Pago::obtenerUltimoNroPago();
             $UltimoNro['nroPago'] += 1;
 
