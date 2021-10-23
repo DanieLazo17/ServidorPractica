@@ -104,7 +104,7 @@
 
         public function actualizarEstadoDeCuotas(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ? WHERE socio = ? AND CURRENT_DATE > fechaVencimiento");
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ? WHERE socio = ? AND pago IS NULL AND CURRENT_DATE > fechaVencimiento");
             $estado = "Impaga";
             
             return $consulta->execute(array($estado, $this->socio));
