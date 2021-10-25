@@ -160,6 +160,19 @@
             $response->getBody()->write(json_encode($arregloClases));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function HabilitarSocio($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+            $estado = "HAB";
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $Socio->setEstado($estado);
+            $Socio->incorporarSocio();
+
+            $response->getBody()->write("Se habilitó socio");
+            return $response;
+        }
     }
 
 ?>
