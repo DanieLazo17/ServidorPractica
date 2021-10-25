@@ -160,6 +160,13 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function actualizarEstado(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE profesor SET estado = ? WHERE legajo = ?");
+            
+            return $consulta->execute(array($this->estado, $this->legajo));
+        }
+
         public static function obtenerUltimoLegajo(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(legajo) AS legajo FROM profesor");

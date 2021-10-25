@@ -144,7 +144,7 @@
             $Socio = new Socio();
             $Socio->setNroSocio($nroSocio);
             $Socio->setEstado($estado);
-            $Socio->suspenderSocio();
+            $Socio->actualizarEstado();
 
             $response->getBody()->write("Se deshabilitó socio");
             return $response;
@@ -168,7 +168,7 @@
             $Socio = new Socio();
             $Socio->setNroSocio($nroSocio);
             $Socio->setEstado($estado);
-            $Socio->incorporarSocio();
+            $Socio->actualizarEstado();
 
             $response->getBody()->write("Se habilitó socio");
             return $response;

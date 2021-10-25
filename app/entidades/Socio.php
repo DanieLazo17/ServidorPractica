@@ -146,10 +146,10 @@
             return $consulta->execute(array($this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->nroSocio));
         }
 
-        public function suspenderSocio(){
+        public function actualizarEstado(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("UPDATE socio SET estado = ? WHERE nroSocio = ?");
-            //Devuelve true en caso de éxito o false en caso de error.
+            
             return $consulta->execute(array($this->estado, $this->nroSocio));
         }
 
@@ -159,13 +159,6 @@
             $consulta->execute(array($this->nroSocio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function incorporarSocio(){
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE socio SET estado = ? WHERE nroSocio = ?");
-            
-            return $consulta->execute(array($this->estado, $this->nroSocio));
         }
 
         public static function obtenerSocios(){

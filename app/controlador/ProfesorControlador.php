@@ -108,6 +108,32 @@
             $response->getBody()->write(json_encode($arregloClases));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function DeshabilitarProfesor($request, $response, $args){
+            $legajo = $args['legajo'];
+            $estado = "DESHAB";
+
+            $Profesor = new Profesor();
+            $Profesor->setLegajo($legajo);
+            $Profesor->setEstado($estado);
+            $Profesor->actualizarEstado();
+
+            $response->getBody()->write("Se deshabilitó profesor");
+            return $response;
+        }
+
+        public function HabilitarProfesor($request, $response, $args){
+            $legajo = $args['legajo'];
+            $estado = "HAB";
+
+            $Profesor = new Profesor();
+            $Profesor->setLegajo($legajo);
+            $Profesor->setEstado($estado);
+            $Profesor->actualizarEstado();
+
+            $response->getBody()->write("Se habilitó profesor");
+            return $response;
+        }
     }
 
 ?>

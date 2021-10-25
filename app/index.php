@@ -75,6 +75,7 @@
 
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
+        //VerificarEstadoHabODesha
         $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
         //Ir a ruteo /Socio/Registro
         //$grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
@@ -132,8 +133,8 @@
         $grupoProfesor->get("/Clase/{legajo}[/]", \ProfesorControlador::class . ':RetornarClasesACargo' );
         $grupoProfesor->post("/Especialidad[/]", \ProfesorControlador::class . ':TraerProfesoresPorEsp' );
         $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
-        //DeshabilitarProfesor
-        //HabilitarProfesor
+        $grupoProfesor->post("/Borrar/{legajo}[/]", \ProfesorControlador::class . ':DeshabilitarProfesor' );
+        $grupoProfesor->post("/Habilitacion/{legajo}[/]", \ProfesorControlador::class . ':HabilitarProfesor' );
     });
 
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
