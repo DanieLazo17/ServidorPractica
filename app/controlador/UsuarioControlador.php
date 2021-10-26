@@ -12,7 +12,7 @@
 
             $Usuario = new Usuario();
             $Usuario->setEmail($listaDeParametros['email']);
-            $objetoUsuario = Usuario::obtenerUsuario();
+            $objetoUsuario = $Usuario->obtenerUsuario();
             $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "estado"=>null, "origenDeContrasena"=>null);
 
             if(!$objetoUsuario){
