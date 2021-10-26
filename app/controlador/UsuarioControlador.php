@@ -10,8 +10,10 @@
         public function Validar($request, $response, $args){  
             $listaDeParametros = $request->getParsedBody();
 
-            $objetoUsuario = Usuario::obtenerUsuario($listaDeParametros['email']);
-            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "origenDeContrasena"=>null);
+            $Usuario = new Usuario();
+            $Usuario->setEmail($listaDeParametros['email']);
+            $objetoUsuario = Usuario::obtenerUsuario();
+            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "estado"=>null, "origenDeContrasena"=>null);
 
             if(!$objetoUsuario){
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
@@ -20,7 +22,22 @@
     
             if($objetoUsuario->compararContrasena($listaDeParametros['pass'])){
                 $idDePerfil = $objetoUsuario->obtenerPerfil();
-                $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+
+                if($idDePerfil['idPerfil'] == "ADMIN"){
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>null, "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                }
+                if($idDePerfil['idPerfil'] == "PRO"){
+                    $Profesor = new Profesor();
+                    $Profesor->setUsuario($objetoUsuario->getIdUsuario());
+                    $estadoProfesor = $Profesor->obtenerEstado();
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>$estadoProfesor['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                }
+                if($idDePerfil['idPerfil'] == "SOC"){
+                    $Socio = new Socio();
+                    $Socio->setUsuario($objetoUsuario->getIdUsuario());
+                    $estadoSocio = $Socio->obtenerEstado();
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>$estadoSocio['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                }
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
             }
             else{

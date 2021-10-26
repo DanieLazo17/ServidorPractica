@@ -161,6 +161,14 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerEstado(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT estado FROM socio WHERE usuario = ?");
+            $consulta->execute(array($this->usuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");

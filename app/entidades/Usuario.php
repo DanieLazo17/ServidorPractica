@@ -92,10 +92,10 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
-        public static function obtenerUsuario($email){
+        public function obtenerUsuario(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email, contrasena, origenDeContrasena FROM usuario WHERE email=?");
-            $consulta->execute(array($email));
+            $consulta->execute(array($this->email));
             $consulta->setFetchMode(PDO::FETCH_CLASS, 'Usuario');
 
             return $consulta->fetch();
