@@ -110,5 +110,16 @@
             $response->getBody()->write("Se actualizó datos correctamente");
             return $response;
         }
+
+        public function RetornarClase($request, $response, $args){
+            $idClase = $args['idClase'];
+
+            $Clase = new Clase();
+            $Clase->setIdClase($idClase);
+            $ObjetoClase = $Clase->obtenerClase();
+
+            $response->getBody()->write(json_encode($ObjetoClase));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 ?>

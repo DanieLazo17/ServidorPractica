@@ -159,6 +159,14 @@
             return $consulta->execute(array($this->tipoClase, $this->dias, $this->horaDeInicio, $this->horaDeFin, $this->fechaDeInicio , $this->fechaDeFin, $this->profesor, $this->salon, $this->cupos, $this->modalidad, $this->idClase));
         }
 
+        public function obtenerClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, modalidad FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND idClase = ?");
+            $consulta->execute(array($this->idClase));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");

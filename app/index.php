@@ -113,6 +113,7 @@
         $grupoClase->post("/EnCurso[/]", \ClaseControlador::class . ':RetornarClasesEnCurso' );
         $grupoClase->post("/Actualizacion/{idClase}[/]", \ClaseControlador::class . ':ActualizarDatos' );
         $grupoClase->get("/Profesor/{legajo}[/]", \ClaseControlador::class . ':RetornarClasesDelProfesor' );
+        $grupoClase->get("/Consulta/{idClase}[/]", \ClaseControlador::class . ':RetornarClase' );
         $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
         $grupoClase->get("[/]", \ClaseControlador::class . ':RetornarClases' );
     });
