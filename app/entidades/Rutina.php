@@ -67,7 +67,7 @@
 
         public static function obtenerRutinas(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM rutina");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idRutina, nombre, descripcion, s.nombreSalon FROM rutina AS r, salon AS s WHERE r.salon = s.idSalon");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
