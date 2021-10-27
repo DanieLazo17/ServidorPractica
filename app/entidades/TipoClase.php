@@ -29,19 +29,19 @@
             return $this->nombre;
         }
 
+        public function guardarTipoClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO tipoclase(nombre) VALUES (?)");
+            
+            return $consulta->execute(array($this->nombre));
+        }
+
         public static function obtenerTiposDeClases(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM tipoclase");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
-        }
-
-        public function guardarTipoClase(){
-            $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO tipoclase(nombre) VALUES (?)");
-            
-            return $consulta->execute(array($this->nombre));
         }
     }
 ?>

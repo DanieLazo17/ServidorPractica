@@ -30,6 +30,7 @@
     require __DIR__ . '/entidades/Salon.php';
     require __DIR__ . '/entidades/Producto.php';
     require __DIR__ . '/entidades/Venta.php';
+    require __DIR__ . '/entidades/Rutina.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/TipoClaseControlador.php';
@@ -41,6 +42,7 @@
     require __DIR__ . '/controlador/ProductoControlador.php';
     require __DIR__ . '/controlador/VentaControlador.php';
     require __DIR__ . '/controlador/AdministrativoControlador.php';
+    require __DIR__ . '/controlador/RutinaControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -139,6 +141,12 @@
 
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
         $grupoSalon->get("[/]", \SalonControlador::class . ':RetornarSalones' );
+    });
+
+    $app->group("/Rutina", function (RouteCollectorProxy $grupoRutina) {
+        $grupoRutina->post("/Registro[/]", \RutinaControlador::class . ':Registrar' );
+        $grupoRutina->post("/Actualizacion/{idRutina}[/]", \RutinaControlador::class . ':Actualizar' );
+        $grupoRutina->get("[/]", \RutinaControlador::class . ':RetornarRutinas' );
     });
 
     $app->run();
