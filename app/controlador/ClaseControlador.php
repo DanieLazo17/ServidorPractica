@@ -78,6 +78,7 @@
         public function ActualizarDatos($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $idClase = $args['idClase'];
+            $tipoClase = $listaDeParametros['tipoClase'];
             $modalidad = $listaDeParametros['modalidad'];
             $dias = $listaDeParametros['dias'];
             $horaDeInicio = $listaDeParametros['horaDeInicio'];
@@ -94,6 +95,7 @@
             
             $Clase = new Clase();
             $Clase->setIdClase($idClase);
+            $Clase->setTipoClase($tipoClase);
             $Clase->setDias($dias);
             $Clase->setHoraDeInicio($horaDeInicio);
             $Clase->setHoraDeFin($horaDeFin);
