@@ -75,7 +75,6 @@
 
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
-        //VerificarEstadoHabODesha
         $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
         //Ir a ruteo /Socio/Registro
         //$grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
@@ -103,6 +102,7 @@
     });
 
     $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
+        $grupoTipoClase->post("/Registro[/]", \TipoClaseControlador::class . ':Registrar' );
         $grupoTipoClase->get("[/]", \TipoClaseControlador::class . ':RetornarTiposDeClases' );
     });
 

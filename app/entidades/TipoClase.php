@@ -36,5 +36,12 @@
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function guardarTipoClase(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO tipoclase(nombre) VALUES (?)");
+            
+            return $consulta->execute(array($this->nombre));
+        }
     }
 ?>
