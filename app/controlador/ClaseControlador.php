@@ -121,5 +121,16 @@
             $response->getBody()->write(json_encode($ObjetoClase));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarSociosDeClase($request, $response, $args){
+            $idClase = $args['idClase'];
+
+            $Clase = new Clase();
+            $Clase->setIdClase($idClase);
+            $arregloDeSocios = $Clase->obtenerSocios();
+
+            $response->getBody()->write(json_encode($arregloDeSocios));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 ?>

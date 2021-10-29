@@ -167,6 +167,14 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerSocios(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT s.nroSocio, s.nombre, s.apellido FROM socio AS s, clase AS c, socioclase AS sc WHERE c.idClase = sc.clase AND s.nroSocio = sc.socio AND c.idClase = ?");
+            $consulta->execute(array($this->idClase));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
