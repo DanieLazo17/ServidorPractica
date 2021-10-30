@@ -143,6 +143,7 @@
 
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {
         $grupoSalon->get("[/]", \SalonControlador::class . ':RetornarSalones' );
+        $grupoSalon->post("/Actualizacion/{idSalon}[/]", \SalonControlador::class . ':Actualizar' );
     });
 
     $app->group("/Rutina", function (RouteCollectorProxy $grupoRutina) {
