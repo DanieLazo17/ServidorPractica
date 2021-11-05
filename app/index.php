@@ -101,6 +101,7 @@
         $grupoSocio->post("/Actualizacion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDatos' );
         $grupoSocio->post("/Borrar/{nroSocio}[/]", \SocioControlador::class . ':DeshabilitarSocio' );
         $grupoSocio->post("/Habilitacion/{nroSocio}[/]", \SocioControlador::class . ':HabilitarSocio' );
+        $grupoSocio->post("/Correo[/]", \SocioControlador::class . ':RetornarNumeroDeSocio' );
     });
 
     $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
@@ -139,6 +140,7 @@
         $grupoProfesor->post("/Actualizacion/{legajo}[/]", \ProfesorControlador::class . ':ActualizarDatos' );
         $grupoProfesor->post("/Borrar/{legajo}[/]", \ProfesorControlador::class . ':DeshabilitarProfesor' );
         $grupoProfesor->post("/Habilitacion/{legajo}[/]", \ProfesorControlador::class . ':HabilitarProfesor' );
+        $grupoProfesor->post("/Correo[/]", \ProfesorControlador::class . ':RetornarLegajoDeProfesor' );
     });
 
     $app->group("/Salon", function (RouteCollectorProxy $grupoSalon) {

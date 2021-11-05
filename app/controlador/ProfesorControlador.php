@@ -134,6 +134,20 @@
             $response->getBody()->write("Se habilitó profesor");
             return $response;
         }
+
+        public function RetornarLegajoDeProfesor($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $email = $listaDeParametros['email'];
+
+            $UsuarioControlador = new UsuarioControlador();
+            $Usuario = $UsuarioControlador->BuscarPorCorreo($request, $response, $args);
+            $Profesor = new Profesor();
+            $Profesor->setUsuario($Usuario['idUsuario']);
+            $ObjetoProfesor = $Profesor->obtenerLegajoProfesor();
+
+            $response->getBody()->write(json_encode($ObjetoProfesor));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

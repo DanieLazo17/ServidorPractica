@@ -173,6 +173,20 @@
             $response->getBody()->write("Se habilitó socio");
             return $response;
         }
+
+        public function RetornarNumeroDeSocio($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $email = $listaDeParametros['email'];
+
+            $UsuarioControlador = new UsuarioControlador();
+            $Usuario = $UsuarioControlador->BuscarPorCorreo($request, $response, $args);
+            $Socio = new Socio();
+            $Socio->setUsuario($Usuario['idUsuario']);
+            $ObjetoSocio = $Socio->obtenerNumeroSocio();
+
+            $response->getBody()->write(json_encode($ObjetoSocio));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>
