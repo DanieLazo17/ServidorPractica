@@ -177,9 +177,21 @@
 
         public static function obtenerClasesDelTipo($tipoClase){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
+            //$consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin FROM clase WHERE tipoClase = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, c.cupos-COUNT(sc.clase) AS cupoDisponible FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc, socioclase AS sc 
+                WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.idClase = sc.clase AND c.tipoClase = ? GROUP BY c.idClase HAVING cupoDisponible > 0
+                UNION
+                SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, c.cupos AS cupoDisponible 
+                FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc
+                WHERE c.profesor = p.legajo
+                AND c.salon = s.idSalon
+                AND c.tipoClase = tc.idTipoClase
+                AND c.tipoClase = ?
+                AND c.idClase NOT IN
+                (SELECT DISTINCT clase
+                FROM socioclase)");
             //$consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, dias, horaDeInicio, horaDeFin, c.cupos-COUNT(sc.clase) AS cupoDisponible FROM clase AS c, socioclase AS sc WHERE c.idClase = sc.clase AND c.tipoClase = ? GROUP BY c.idClase HAVING cupoDisponible > 0");
-            $consulta->execute(array($tipoClase));
+            $consulta->execute(array($tipoClase, $tipoClase));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
@@ -194,7 +206,18 @@
 
         public static function obtenerClases(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase");
+            //$consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, c.cupos-COUNT(sc.clase) AS cupoDisponible FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc, socioclase AS sc 
+                WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.idClase = sc.clase GROUP BY sc.clase
+                UNION
+                SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, c.cupos AS cupoDisponible 
+                FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc
+                WHERE c.profesor = p.legajo
+                AND c.salon = s.idSalon
+                AND c.tipoClase = tc.idTipoClase
+                AND c.idClase NOT IN
+                (SELECT DISTINCT clase
+                FROM socioclase)");
             //$consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon, cupos, c.cupos-COUNT(sc.clase) AS cupoDisponible FROM clase AS c, profesor AS p, salon AS s, tipoclase AS tc, socioclase AS sc WHERE c.profesor = p.legajo AND c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.idClase = sc.clase GROUP BY c.idClase");
             $consulta->execute();
 
