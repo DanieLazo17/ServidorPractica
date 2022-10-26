@@ -179,7 +179,7 @@
 
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido FROM socio");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);

@@ -45,8 +45,16 @@
         }
 
         public function RetornarSocios($request, $response, $args){  
-            $arregloSocios = Socio::obtenerSocios();
-            $response->getBody()->write(json_encode($arregloSocios));
+            $socios = Socio::obtenerSocios();
+            $sociosConCorreos = [];
+
+            foreach($socios as $socio){
+                $correo = Socio::obtenerCorreo($socio['usuario']);
+                $socioConCorreo = array_merge($socio,$correo);
+                array_push($sociosConCorreos, $socioConCorreo);
+            }
+
+            $response->getBody()->write(json_encode($sociosConCorreos));
    
             return $response->withHeader('Content-Type', 'application/json');
         }
