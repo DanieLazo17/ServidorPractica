@@ -7,7 +7,7 @@
             $fechaActual = date("Y/m/d");
             $anio = date("Y");
             $dia = date("d");
-            $mes = (int)date("n");
+            $suscripcion = (int)date("n");
             $importe = 2000.00;
             //$arregloDeFechas = array();
             $estado = "Emitida";
@@ -18,11 +18,11 @@
             $Cuota->setFechaEmision($fechaActual);
             $Cuota->setEstado($estado);
 
-            for($i = $mes; $i <= 12; ++$i){
-                $mesDeCuota = date_create_from_format("n",$i);
+            for($i = $suscripcion; $i <= 12; ++$i){
+                $suscripcionDeCuota = date_create_from_format("n",$i);
                 $fechaDeVencimiento = date_create($anio ."-". (string)$i ."-". (string)10);
                 
-                $Cuota->setMes(date_format($mesDeCuota,"M"));
+                $Cuota->setSuscripcion(date_format($suscripcionDeCuota,"M"));
                 $Cuota->setFechaVencimiento(date_format($fechaDeVencimiento,"Y/m/d"));
                 $Cuota->guardarCuotasDeSocio();
                 //array_push($arregloDeFechas, $i);
@@ -39,7 +39,7 @@
             $fechaActual = date("Y/m/d");
             $anio = date("Y");
             $dia = date("d");
-            $mes = (int)date("n");
+            $suscripcion = (int)date("n");
             $importe = 2000.00;
             $estado = "Emitida";
 
@@ -55,11 +55,11 @@
                     $Cuota->setFechaEmision($fechaActual);
                     $Cuota->setEstado($estado);
                         
-                    for($i = $mes; $i <= 12; ++$i){
-                        $mesDeCuota = date_create_from_format("n",$i);
+                    for($i = $suscripcion; $i <= 12; ++$i){
+                        $suscripcionDeCuota = date_create_from_format("n",$i);
                         $fechaDeVencimiento = date_create($anio ."-". (string)$i ."-". (string)10);
                         
-                        $Cuota->setMes(date_format($mesDeCuota,"M"));
+                        $Cuota->setSuscripcion(date_format($suscripcionDeCuota,"M"));
                         $Cuota->setFechaVencimiento(date_format($fechaDeVencimiento,"Y/m/d"));
                         $Cuota->guardarCuotasDeSocio();
                     }
