@@ -22,7 +22,7 @@
     require __DIR__ . '/entidades/Usuario.php';
     require __DIR__ . '/entidades/Administrativo.php';
     require __DIR__ . '/entidades/Socio.php';
-    require __DIR__ . '/entidades/TipoClase.php';
+    require __DIR__ . '/entidades/Actividad.php';
     require __DIR__ . '/entidades/Clase.php';
     require __DIR__ . '/entidades/Profesor.php';
     require __DIR__ . '/entidades/Cuota.php';
@@ -33,7 +33,7 @@
     require __DIR__ . '/entidades/Rutina.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
-    require __DIR__ . '/controlador/TipoClaseControlador.php';
+    require __DIR__ . '/controlador/ActividadControlador.php';
     require __DIR__ . '/controlador/ClaseControlador.php';
     require __DIR__ . '/controlador/ProfesorControlador.php';
     require __DIR__ . '/controlador/CuotaControlador.php';
@@ -104,9 +104,9 @@
         $grupoSocio->post("/Correo[/]", \SocioControlador::class . ':RetornarNumeroDeSocio' );
     });
 
-    $app->group("/TipoClase", function (RouteCollectorProxy $grupoTipoClase) {
-        $grupoTipoClase->post("/Registro[/]", \TipoClaseControlador::class . ':Registrar' );
-        $grupoTipoClase->get("[/]", \TipoClaseControlador::class . ':RetornarTiposDeClases' );
+    $app->group("/Actividad", function (RouteCollectorProxy $grupoActividad) {
+        $grupoActividad->post("/Registro[/]", \ActividadControlador::class . ':Registrar' );
+        $grupoActividad->get("[/]", \ActividadControlador::class . ':RetornarActividades' );
     });
 
     $app->group("/Clase", function (RouteCollectorProxy $grupoClase) {
@@ -116,7 +116,7 @@
         $grupoClase->get("/Profesor/{legajo}[/]", \ClaseControlador::class . ':RetornarClasesDelProfesor' );
         $grupoClase->get("/Socios/{idClase}[/]", \ClaseControlador::class . ':RetornarSociosDeClase' );
         $grupoClase->get("/Consulta/{idClase}[/]", \ClaseControlador::class . ':RetornarClase' );
-        $grupoClase->get("/{tipoClase}[/]", \ClaseControlador::class . ':RetornarClasesDelTipo' );
+        $grupoClase->get("/{Actividad}[/]", \ClaseControlador::class . ':RetornarActividades' );
         $grupoClase->get("[/]", \ClaseControlador::class . ':RetornarClases' );
     });
 

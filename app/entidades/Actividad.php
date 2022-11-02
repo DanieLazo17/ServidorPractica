@@ -1,17 +1,17 @@
 <?php
 
-    class TipoClase{
+    class Actividad{
 
-        private $idTipoClase;
+        private $idActividad;
         private $nombre;
 
         function __construct(){
             
         }
 
-        function setIdTipoClase($idTipoClase){
+        function setIdActividad($idActividad){
             
-            $this->idTipoClase = $idTipoClase;
+            $this->idActividad = $idActividad;
         }
 
         function setNombre($nombre){
@@ -19,9 +19,9 @@
             $this->nombre = $nombre;
         }
 
-        function getIdTipoClase(){
+        function getIdActividad(){
             
-            return $this->idTipoClase;
+            return $this->idActividad;
         }
 
         function getNombre(){
@@ -29,16 +29,16 @@
             return $this->nombre;
         }
 
-        public function guardarTipoClase(){
+        public function guardarActividad(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO tipoclase(nombre) VALUES (?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO actividad(nombre) VALUES (?)");
             
             return $consulta->execute(array($this->nombre));
         }
 
-        public static function obtenerTiposDeClases(){
+        public static function obtenerActividades(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM tipoclase");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM actividad");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
