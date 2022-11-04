@@ -7,6 +7,7 @@
         private $cantClases;
         private $descSuscripcion;
         private $actividad;
+        private $precio; 
   
         
         function __construct(){
@@ -18,7 +19,7 @@
             $this->idSuscripcion = $idSuscripcion;
         }
 
-        function setNombre($nombre ){
+        function setNombre($nombre){
             
             $this->nombre  = $nombre;
         }
@@ -38,6 +39,10 @@
             $this->actividad = $actividad;
         }
 
+        function setPrecio($precio){
+            
+            $this->precio = $precio;
+        }
         
         function getIdSuscripcion(){
             
@@ -62,27 +67,31 @@
             
             return $this->actividad;
         }
+        function getPrecio(){
+            
+            return $this->precio;
+        }
 
        
         public function guardarSuscripcion(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO suscripcion(idSuscripcion, nombre, cantClases, descSuscripcion, actividad) VALUES (?,?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO suscripcion(idSuscripcion, nombre, cantClases, descSuscripcion, actividad, precio) VALUES (?,?,?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->idSuscripcion, $this->nombre, $this->cantClases, $this->descSuscripcion, $this->actividad));
+            return $consulta->execute(array($this->idSuscripcion, $this->nombre, $this->cantClases, $this->descSuscripcion, $this->actividad, $this->precio));
         }
 
        
 
         public function actualizarSuscripcion(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE suscripcion SET nombre = ?, cantClases = ?, descSuscripcion= ?, actividad = ? WHERE idSuscripcion = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE suscripcion SET nombre = ?, cantClases = ?, descSuscripcion= ?, actividad = ?, precio = ? WHERE idSuscripcion = ?");
             
-            return $consulta->execute(array( $this->nombre, $this->cantClases, $this->descSuscripcion, $this->actividad, $this->idSuscripcion));
+            return $consulta->execute(array( $this->nombre, $this->cantClases, $this->descSuscripcion, $this->actividad, $this->precio, $this->idSuscripcion));
         }
 
         public function obtenerUnaSuscripcion(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idSuscripcion, nombre, cantClases, descSuscripcion, actividad FROM suscripcion WHERE  idSuscripcion = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idSuscripcion, nombre, cantClases, descSuscripcion, activida , precio FROM suscripcion WHERE  idSuscripcion = ?");
             $consulta->execute(array($this->idSuscripcion));
 
             return $consulta->fetch(PDO::FETCH_ASSOC);

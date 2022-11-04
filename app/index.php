@@ -31,6 +31,7 @@
     require __DIR__ . '/entidades/Producto.php';
     require __DIR__ . '/entidades/Venta.php';
     require __DIR__ . '/entidades/Rutina.php';
+    require __DIR__ . '/entidades/Suscripcion.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/ActividadControlador.php';
@@ -43,6 +44,7 @@
     require __DIR__ . '/controlador/VentaControlador.php';
     require __DIR__ . '/controlador/AdministrativoControlador.php';
     require __DIR__ . '/controlador/RutinaControlador.php';
+    require __DIR__ . '/controlador/SuscripcionControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -152,6 +154,14 @@
         $grupoRutina->post("/Registro[/]", \RutinaControlador::class . ':Registrar' );
         $grupoRutina->post("/Actualizacion/{idRutina}[/]", \RutinaControlador::class . ':Actualizar' );
         $grupoRutina->get("[/]", \RutinaControlador::class . ':RetornarRutinas' );
+    });
+
+    
+    $app->group("/Suscripcion", function (RouteCollectorProxy $grupoSuscripcion) {
+        $grupoSuscripcion->post("/Registro[/]", \SuscripcionControlador::class . ':RegistrarSuscripcion' );
+        $grupoSuscripcion->post("/Actualizacion/{idSuscripcion}[/]", \SuscripcionControlador::class . ':ActualizarDatos' );
+        $grupoSuscripcion->get("[/]", \SuscripcionControlador::class . ':RetornarSuscripciones' );
+        //$grupoSuscripcion->post("/Actualizacion/{idSuscripcion}[/]", \SuscripcionControlador::class . ':ActualizarDatos' );
     });
 
     $app->run();

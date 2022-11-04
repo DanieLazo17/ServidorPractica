@@ -3,7 +3,7 @@
     class Cuota{
 
         private $idCuota;
-        private $suscripcion;
+        private $idSuscripcion;
         private $socio;
         private $importe;
         private $fechaEmision;
@@ -20,9 +20,9 @@
             $this->idCuota = $idCuota;
         }
 
-        function setSuscripcion($suscripcion){    
+        function setSuscripcion($idSuscripcion){    
              
-            $this->suscripcion = $suscripcion;
+            $this->idSuscripcion = $idSuscripcion;
         }
 
         function setSocio($socio){    
@@ -60,9 +60,9 @@
             return $this->idCuota;
         }
 
-        function getsuscripcion(){
+        function getidSuscripcion(){
             
-            return $this->suscripcion;
+            return $this->idSuscripcion;
         }
 
         function getSocio(){
@@ -97,9 +97,9 @@
 
         public function guardarCuotasDeSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(suscripcion, socio, importe, fechaEmision, fechaVencimiento, estado) VALUES (?,?,?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(idSuscripcion, socio, importe, fechaEmision, fechaVencimiento, estado) VALUES (?,?,?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->suscripcion, $this->socio, $this->importe, $this->fechaEmision, $this->fechaVencimiento, $this->estado));
+            return $consulta->execute(array($this->idSuscripcion, $this->socio, $this->importe, $this->fechaEmision, $this->fechaVencimiento, $this->estado));
         }
 
         public function actualizarEstadoDeCuotas(){
@@ -112,7 +112,7 @@
 
         public function obtenerCuotasEmitOVenc(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, suscripcion, importe, fechaVencimiento, estado FROM cuota WHERE socio=? AND (estado='Emitida' OR estado='Impaga')");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, idSuscripcion, importe, fechaVencimiento, estado FROM cuota WHERE socio=? AND (estado='Emitida' OR estado='Impaga')");
             $consulta->execute(array($this->socio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
