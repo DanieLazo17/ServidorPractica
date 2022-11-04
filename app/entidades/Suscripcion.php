@@ -91,18 +91,18 @@
 
         public function obtenerUnaSuscripcion(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idSuscripcion, nombre, cantClases, descSuscripcion, activida , precio FROM suscripcion WHERE  idSuscripcion = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idSuscripcion, nombre, cantClases, descSuscripcion, actividad , precio FROM suscripcion WHERE  idSuscripcion = ?");
             $consulta->execute(array($this->idSuscripcion));
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
-        public function obtenerSuscripciones(){
+        public  static function obtenerSuscripciones(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT * FROM suscripcion");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT s.idSuscripcion, s.nombre, s.cantClases, s.descSuscripcion, a.nombre as actividad , s.precio FROM suscripcion as s, actividad as a where a.idActividad=s.actividad");
             $consulta->execute();
 
-            return $consulta->fetch(PDO::FETCH_ASSOC);
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public static function obtenerUltimoNroSuscripcion(){

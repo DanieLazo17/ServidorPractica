@@ -51,7 +51,7 @@
             $Suscripcion->setCantClases($cantClases);
             $Suscripcion->setDescSuscripcion($descSuscripcion);
             $Suscripcion->setActividad($actividad);
-            $Suscripcion->setPago($pago);
+            $Suscripcion->setPrecio($precio);
             $Suscripcion->actualizarSuscripcion();
 
             $response->getBody()->write("Se actualizó datos correctamente");

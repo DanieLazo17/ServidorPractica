@@ -161,7 +161,7 @@
         $grupoSuscripcion->post("/Registro[/]", \SuscripcionControlador::class . ':RegistrarSuscripcion' );
         $grupoSuscripcion->post("/Actualizacion/{idSuscripcion}[/]", \SuscripcionControlador::class . ':ActualizarDatos' );
         $grupoSuscripcion->get("[/]", \SuscripcionControlador::class . ':RetornarSuscripciones' );
-        //$grupoSuscripcion->post("/Actualizacion/{idSuscripcion}[/]", \SuscripcionControlador::class . ':ActualizarDatos' );
+        $grupoSuscripcion->get("/{idSuscripcion}[/]", \SuscripcionControlador::class . ':RetornarUnaSuscripcion' );
     });
 
     $app->run();
