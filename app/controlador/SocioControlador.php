@@ -34,9 +34,7 @@
             $ObjetoSocio->setFechaDeAlta($fechaActual);
             
             $ObjetoSocio->guardarSocio();
-            $ObjetoSocio->agregarPerfil();
-            $CuotaControlador = new CuotaControlador();
-            $CuotaControlador->GenerarCuotasDeSocio($UltimoNro['nroSocio']);
+            $ObjetoSocio->agregarPerfil();        
             
             //$response->getBody()->write(json_encode($args));
             $SocioNuevo = array("nroSocio"=>$UltimoNro['nroSocio'], "contrasena"=>$UsuarioNuevo['contrasena']);
