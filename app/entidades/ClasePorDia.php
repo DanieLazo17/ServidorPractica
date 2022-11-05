@@ -56,5 +56,17 @@
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function obtenerInscriptos(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT s.nroSocio, s.nombre, s.apellido 
+            FROM clasexdia AS cxd, socioclase AS sc, socio AS s 
+            WHERE cxd.idClasePorDia = sc.clase 
+            AND sc.socio = s.nroSocio 
+            AND cxd.idClasePorDia = ?");
+            $consulta->execute(array($this->idClasePorDia));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>
