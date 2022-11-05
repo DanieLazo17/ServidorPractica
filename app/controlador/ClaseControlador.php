@@ -12,7 +12,6 @@
             $horaDeInicio = $listaDeParametros['horaDeInicio'];
             $horaDeFin = $listaDeParametros['horaDeFin'];
             $fechaDeInicio = $listaDeParametros['fechaDeInicio'];
-            $fechaDeFin = $listaDeParametros['fechaDeFin'];
             $cupos = $listaDeParametros['cupos'];
             $profesor = $listaDeParametros['profesor'];
             $salon = $listaDeParametros['salon'];
@@ -24,7 +23,6 @@
             $Clase->setHoraDeInicio($horaDeInicio);
             $Clase->setHoraDeFin($horaDeFin);
             $Clase->setFechaDeInicio($fechaDeInicio);
-            $Clase->setFechaDeFin($fechaDeFin);
             $Clase->setProfesor($profesor);
             $Clase->setSalon($salon);
             $Clase->setCupos($cupos);
@@ -84,7 +82,6 @@
             $horaDeInicio = $listaDeParametros['horaDeInicio'];
             $horaDeFin = $listaDeParametros['horaDeFin'];
             $fechaDeInicio = $listaDeParametros['fechaDeInicio'];
-            $fechaDeFin = $listaDeParametros['fechaDeFin'];
             $cupos = $listaDeParametros['cupos'];
             $profesor = $listaDeParametros['profesor'];
             $salon = $listaDeParametros['salon'];
@@ -100,7 +97,6 @@
             $Clase->setHoraDeInicio($horaDeInicio);
             $Clase->setHoraDeFin($horaDeFin);
             $Clase->setFechaDeInicio($fechaDeInicio);
-            $Clase->setFechaDeFin($fechaDeFin);
             $Clase->setProfesor($profesor);
             $Clase->setSalon($salon);
             $Clase->setCupos($cupos);
