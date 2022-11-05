@@ -50,6 +50,7 @@
             AND c.profesor = p.legajo
             AND c.tipoActividad = a.idActividad
             AND c.salon = salon.idSalon
+            AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
             GROUP BY sc.clase");
             $consulta->execute();
 
