@@ -5,12 +5,12 @@
             $listaDeParametros = $request->getParsedBody();
             
             $UltimoNroSuscripcion = Suscripcion::obtenerUltimoNroSuscripcion();
-            $UltimoNroClase['idSuscripcion'] += 1;
+            $UltimoNroSuscripcion['idSuscripcion'] += 1;
             $nombre= $listaDeParametros['nombre'];
             $cantClases = $listaDeParametros['cantClases'];
             $descSuscripcion = $listaDeParametros['descSuscripcion'];
             $actividad = $listaDeParametros['actividad'];
-            $pago = $listaDeParametros['pago'];
+            $precio = $listaDeParametros['precio'];
             
 
             $Suscripcion = new Suscripcion();
@@ -19,7 +19,7 @@
             $Suscripcion->setCantClases($cantClases);
             $Suscripcion->setDescSuscripcion($descSuscripcion);
             $Suscripcion->setActividad($actividad);
-            $Suscripcion->setPago($pago);
+            $Suscripcion->setPrecio($precio);
             $Suscripcion->guardarSuscripcion();
 
             $SuscripcionNueva = array("idSuscripcion"=>$UltimoNroSuscripcion['idSuscripcion']);
@@ -42,7 +42,7 @@
             $cantClases = $listaDeParametros['cantClases'];
             $descSuscripcion = $listaDeParametros['descSuscripcion'];
             $actividad = $listaDeParametros['actividad'];
-            $pago = $listaDeParametros['pago'];
+            $precio = $listaDeParametros['precio'];
 
           
             $Suscripcion = new Suscripcion();
