@@ -6,7 +6,7 @@
             
             $UltimoNroClase = Clase::obtenerUltimoNroClase();
             $UltimoNroClase['idClase'] += 1;
-            $tipoClase = $listaDeParametros['tipoClase'];
+            $tipoActividad= $listaDeParametros['tipoActividad'];
             $modalidad = $listaDeParametros['modalidad'];
             $dias = $listaDeParametros['dias'];
             $horaDeInicio = $listaDeParametros['horaDeInicio'];
@@ -18,7 +18,7 @@
 
             $Clase = new Clase();
             $Clase->setIdClase($UltimoNroClase['idClase']);
-            $Clase->setTipoClase($tipoClase);
+            $Clase->setActividad($tipoActividad);
             $Clase->setDias($dias);
             $Clase->setHoraDeInicio($horaDeInicio);
             $Clase->setHoraDeFin($horaDeFin);
@@ -35,9 +35,9 @@
         }
 
         public function RetornarClasesDelTipo($request, $response, $args){
-            $tipoClase = $args['tipoClase'];
+            $tipoActividad = $args['tipoActividad'];
 
-            $arregloDeClases = Clase::obtenerClasesDelTipo($tipoClase);
+            $arregloDeClases = Clase::obtenerClasesDelTipo($tipoActividad);
             $response->getBody()->write(json_encode($arregloDeClases));
    
             return $response->withHeader('Content-Type', 'application/json');
@@ -76,7 +76,7 @@
         public function ActualizarDatos($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $idClase = $args['idClase'];
-            $tipoClase = $listaDeParametros['tipoClase'];
+            $tipoActividad = $listaDeParametros['tipoActividad'];
             $modalidad = $listaDeParametros['modalidad'];
             $dias = $listaDeParametros['dias'];
             $horaDeInicio = $listaDeParametros['horaDeInicio'];
@@ -92,7 +92,7 @@
             
             $Clase = new Clase();
             $Clase->setIdClase($idClase);
-            $Clase->setTipoClase($tipoClase);
+            $Clase->setActividad($tipoActividad);
             $Clase->setDias($dias);
             $Clase->setHoraDeInicio($horaDeInicio);
             $Clase->setHoraDeFin($horaDeFin);
