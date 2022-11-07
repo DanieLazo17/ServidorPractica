@@ -28,6 +28,8 @@
             $Clase->setCupos($cupos);
             $Clase->setModalidad($modalidad);
             $Clase->guardarClase();
+            $ClasePorDiaControlador = new ClasePorDiaControlador();
+            $ClasePorDiaControlador->CrearClasesNuevas($UltimoNroClase['idClase'], $fechaDeInicio);
 
             $ClaseNueva = array("idClase"=>$UltimoNroClase['idClase']);
             $response->getBody()->write("Clase generada correctamente.");
