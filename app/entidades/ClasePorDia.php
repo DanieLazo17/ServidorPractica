@@ -83,5 +83,15 @@
 
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
+
+        public static function obtenerProximasClases(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();            
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClasePorDia, idClase, fecha
+            FROM clasexdia
+            WHERE fecha BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)");
+            $consulta->execute();
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
     }
 ?>

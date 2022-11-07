@@ -4,6 +4,13 @@
         
         public function RetornarClasesPorDia($request, $response, $args){
             $arregloDeClases = ClasePorDia::obtenerClases();
+
+            $ProximasClases = ClasePorDia::obtenerProximasClases();
+
+            if(count($ProximasClases) <= 28){
+                ClasePorDiaControlador::GenerarClases($request, $response, $args);
+            }
+            
             $response->getBody()->write(json_encode($arregloDeClases));
    
             return $response->withHeader('Content-Type', 'application/json');
@@ -38,14 +45,11 @@
                 $ClasePorDia->setFecha($NuevaFecha);
 
                 $ClasePorDia->guardarClasePorDia();
-                // $ClaseXDia = array("idClase"=>$Clase['idClase'], "fecha"=>$NuevaFecha);
-                // array_push($ClasesGeneradas, $ClaseXDia);
             }
 
-            $response->getBody()->write("Se generó clases correctamente");
-            return $response;
-            // $response->getBody()->write(json_encode($ClasesGeneradas));
-            // return $response->withHeader('Content-Type', 'application/json');
+            // $response->getBody()->write("Se generó clases correctamente");
+            // return $response;
+            return;
         }
     }
 ?>
