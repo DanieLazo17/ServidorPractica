@@ -68,5 +68,20 @@
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
+
+        public function guardarClasePorDia(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO clasexdia(idClase, fecha) VALUES (?,?)");
+            
+            return $consulta->execute(array($this->idClase, $this->fecha));
+        }
+
+        public function obtenerUltimaFecha(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(fecha) AS fecha FROM clasexdia WHERE idClase = ?");
+            $consulta->execute(array($this->idClase));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
     }
 ?>

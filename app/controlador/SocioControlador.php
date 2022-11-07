@@ -80,11 +80,11 @@
             $listaDeParametros = $request->getParsedBody();
 
             $nroSocio = $listaDeParametros['nroSocio'];
-            $idClase = $listaDeParametros['idClase'];
+            $idClasePorDia = $listaDeParametros['idClasePorDia'];
 
             $ObjetoSocio = new Socio();
             $ObjetoSocio->setNroSocio($nroSocio);
-            $ObjetoSocio->guardarInscripcionAClase($idClase);
+            $ObjetoSocio->guardarInscripcionAClase($idClasePorDia);
 
             $response->getBody()->write("Se realizó inscripción correctamente");
             return $response;

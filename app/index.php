@@ -168,6 +168,7 @@
 
     $app->group("/ClasePorDia", function (RouteCollectorProxy $grupoClasePorDia) {
         $grupoClasePorDia->get("[/]", \ClasePorDiaControlador::class . ':RetornarClasesPorDia' );
+        $grupoClasePorDia->get("/Registro[/]", \ClasePorDiaControlador::class . ':GenerarClases');
         $grupoClasePorDia->get("/{idClasePorDia}[/]", \ClasePorDiaControlador::class . ':RetornarInscriptos' );
     });
 

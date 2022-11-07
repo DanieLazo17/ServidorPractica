@@ -110,11 +110,11 @@
             return $consulta->execute(array($this->usuario, $idPerfil));
         }
 
-        public function guardarInscripcionAClase($idClase){
+        public function guardarInscripcionAClase($idClasePorDia){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO socioclase(socio, clase) VALUES (?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->nroSocio, $idClase));
+            return $consulta->execute(array($this->nroSocio, $idClasePorDia));
         }
 
         public function obtenerSocio(){

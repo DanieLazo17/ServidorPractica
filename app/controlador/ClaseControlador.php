@@ -128,5 +128,11 @@
             $response->getBody()->write(json_encode($arregloDeSocios));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarClasesBases(){
+            $Clases = Clase::obtenerClasesBases();
+   
+            return $Clases;
+        }
     }
 ?>
