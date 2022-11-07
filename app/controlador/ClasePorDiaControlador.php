@@ -7,7 +7,10 @@
 
             $ProximasClases = ClasePorDia::obtenerProximasClases();
 
-            if(count($ProximasClases) <= 28){
+            $ClaseControlador = new ClaseControlador();
+            $ClasesBases = $ClaseControlador->RetornarClasesBases();
+
+            if( count($ProximasClases) <= ( count($ClasesBases) * 4 ) ){
                 ClasePorDiaControlador::GenerarClases($request, $response, $args);
             }
             
