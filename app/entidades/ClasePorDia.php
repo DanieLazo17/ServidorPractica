@@ -42,24 +42,27 @@
 
         public static function obtenerClases(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();            
-            // $consulta = $objAccesoDatos->prepararConsulta("SELECT sc.clase, cxd.idClase, a.nombre AS actividad, c.dias, c.horaDeInicio, salon.nombreSalon, p.nombre AS profesor, c.cupos, c.cupos-COUNT(sc.clase) AS cupoDisponible 
-            // FROM clasexdia AS cxd, clase AS c, socioclase AS sc, socio AS s, profesor AS p, actividad AS a, salon
-            // WHERE cxd.idClase = c.idClase 
-            // AND cxd.idClasePorDia = sc.clase 
-            // AND sc.socio = s.nroSocio
-            // AND c.profesor = p.legajo
-            // AND c.tipoActividad = a.idActividad
-            // AND c.salon = salon.idSalon
-            // AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
-            // GROUP BY sc.clase");
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase, cxd.fecha, a.nombre AS actividad, c.dias, c.horaDeInicio, salon.nombreSalon, p.nombre AS profesor, c.cupos
-            FROM clasexdia AS cxd, clase AS c, profesor AS p, actividad AS a, salon
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT sc.clase, cxd.idClase, cxd.fecha, a.nombre AS actividad, c.dias, c.horaDeInicio, salon.nombreSalon, CONCAT(p.nombre, ' ',p.apellido) AS profesor, c.cupos, c.cupos-COUNT(sc.clase) AS cupoDisponible 
+            FROM clasexdia AS cxd, clase AS c, socioclase AS sc, profesor AS p, actividad AS a, salon
+            WHERE cxd.idClase = c.idClase 
+            AND cxd.idClasePorDia = sc.clase 
+            AND c.profesor = p.legajo
+            AND c.tipoActividad = a.idActividad
+            AND c.salon = salon.idSalon
+            AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
+            GROUP BY sc.clase
+            UNION
+            SELECT cxd.idClasePorDia, cxd.idClase, cxd.fecha, a.nombre AS actividad, c.dias, c.horaDeInicio, salon.nombreSalon, CONCAT(p.nombre, ' ',p.apellido) AS profesor, c.cupos, c.cupos AS cupoDisponible
+            FROM clasexdia AS cxd, clase AS c, profesor AS p, actividad AS a, salon             
             WHERE cxd.idClase = c.idClase 
             AND c.profesor = p.legajo
             AND c.tipoActividad = a.idActividad
             AND c.salon = salon.idSalon
             AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
-            ORDER BY cxd.fecha ASC");
+            AND cxd.idClasePorDia NOT IN
+            (SELECT DISTINCT clase
+            FROM socioclase)
+            ORDER BY fecha ASC");
             $consulta->execute();
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
