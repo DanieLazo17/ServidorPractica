@@ -19,8 +19,8 @@
             $Pago->setFecha($fechaActual);
             $Pago->guardarPago();
 
-            $CuotaControlador = new CuotaControlador();
-            $CuotaControlador->RegistrarPago($request, $response, $args, $NuevoNroPago);
+            $CompraControlador = new CompraControlador();
+            $CompraControlador->RegistrarPago($request, $response, $args, $NuevoNroPago);
             
             $response->getBody()->write("Su número de pago es: " . $NuevoNroPago);
             return $response;

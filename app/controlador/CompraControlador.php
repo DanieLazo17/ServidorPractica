@@ -109,14 +109,20 @@
             $listaDeParametros = $request->getParsedBody();
             $Compras = $listaDeParametros['compras'];
             $arregloDeCompras = json_decode($Compras);
-            $estado = "Pagada";
+
+            $FechaActual = date("Y-m-d");
+            $date = date_create($FechaActual);
+            date_add($date,date_interval_create_from_date_string("30 days"));
+            $FechaVencimiento = date_format($date,"Y-m-d");
 
             for($i = 0; $i < count($arregloDeCompras); ++$i){
                 $Compra = new Compra();
                 $Compra->setIdCompra($arregloDeCompras[$i]);
-                $Compra->setEstado($estado);
+                $Compra->setFechaEmision($FechaActual);
+                $Compra->setFechaVencimiento($FechaVencimiento);
+                $Compra->setEstado("Pagada");
                 $Compra->setPago($pago);
-                $Compra->actualizarPagoDeCompra();
+                $Compra->pagarCompra();
             }
 
             return;

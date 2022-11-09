@@ -118,11 +118,11 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function actualizarPagoDeCompra(){
+        public function pagarCompra(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE compra SET estado = ?, pago = ? WHERE idCompra = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE compra SET fechaEmision = ?, fechaVencimiento = ?, estado = ?, pago = ? WHERE idCompra = ?");
             
-            return $consulta->execute(array($this->estado, $this->pago, $this->idCompra));
+            return $consulta->execute(array($this->fechaEmision, $this->fechaVencimiento, $this->estado, $this->pago, $this->idCompra));
         }
     }
 ?>
