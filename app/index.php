@@ -98,6 +98,7 @@
         $grupoSocio->post("/Registro[/]", \SocioControlador::class . ':RegistrarSocio' );
         $grupoSocio->get("[/]", \SocioControlador::class . ':RetornarSocios' );
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
+        $grupoSocio->get("/Suscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarSuscripcionesActivas' );
         $grupoSocio->get("/Clase/{nroSocio}[/]", \SocioControlador::class . ':RetornarClasesEnCurso' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
@@ -156,7 +157,6 @@
         $grupoRutina->post("/Actualizacion/{idRutina}[/]", \RutinaControlador::class . ':Actualizar' );
         $grupoRutina->get("[/]", \RutinaControlador::class . ':RetornarRutinas' );
     });
-
     
     $app->group("/Suscripcion", function (RouteCollectorProxy $grupoSuscripcion) {
         $grupoSuscripcion->post("/Registro[/]", \SuscripcionControlador::class . ':RegistrarSuscripcion' );

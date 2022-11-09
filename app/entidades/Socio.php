@@ -177,6 +177,21 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerSuscripcionesActivas(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT c.idCompra, c.idSuscripcion, su.nombre AS nombreSuscripcion, a.idActividad, a.nombre AS nombreActividad, su.cantClases, c.fechaVencimiento
+            FROM compra AS c, suscripcion AS su, socio AS s, actividad AS a
+            WHERE c.idSuscripcion = su.idSuscripcion 
+            AND c.socio = s.nroSocio 
+            AND su.actividad = a.idActividad
+            AND c.socio = ?
+            AND CURRENT_DATE BETWEEN c.fechaEmision AND c.fechaVencimiento
+            AND c.estado = 'PAGADA' OR c.estado = 'BONIFICADA'");
+            $consulta->execute(array($this->nroSocio));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");

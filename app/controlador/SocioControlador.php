@@ -193,6 +193,17 @@
             $response->getBody()->write(json_encode($ObjetoSocio));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarSuscripcionesActivas($request, $response, $args){
+            $nroSocio = $args['nroSocio'];            
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $SuscripcionesActivas = $Socio->obtenerSuscripcionesActivas();
+
+            $response->getBody()->write(json_encode($SuscripcionesActivas));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>
