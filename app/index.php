@@ -25,7 +25,7 @@
     require __DIR__ . '/entidades/Actividad.php';
     require __DIR__ . '/entidades/Clase.php';
     require __DIR__ . '/entidades/Profesor.php';
-    require __DIR__ . '/entidades/Cuota.php';
+    require __DIR__ . '/entidades/Compra.php';
     require __DIR__ . '/entidades/Pago.php';
     require __DIR__ . '/entidades/Salon.php';
     require __DIR__ . '/entidades/Producto.php';
@@ -38,7 +38,7 @@
     require __DIR__ . '/controlador/ActividadControlador.php';
     require __DIR__ . '/controlador/ClaseControlador.php';
     require __DIR__ . '/controlador/ProfesorControlador.php';
-    require __DIR__ . '/controlador/CuotaControlador.php';
+    require __DIR__ . '/controlador/CompraControlador.php';
     require __DIR__ . '/controlador/PagoControlador.php';
     require __DIR__ . '/controlador/SalonControlador.php';
     require __DIR__ . '/controlador/ProductoControlador.php';
@@ -124,15 +124,14 @@
         $grupoClase->get("[/]", \ClaseControlador::class . ':RetornarClases' );
     });
 
-    $app->group("/Cuota", function (RouteCollectorProxy $grupoCuota) {
-        $grupoCuota->get("/Estado/{nroSocio}[/]", \CuotaControlador::class . ':ObtenerEstadoDeCuotas' );
-        $grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotas' );
-        //$grupoCuota->get("[/]", \CuotaControlador::class . ':GenerarCuotasDeSocio' );
-        $grupoCuota->get("/{nroSocio}[/]", \CuotaControlador::class . ':ObtenerCuotasDeSocio' );
+    $app->group("/Compra", function (RouteCollectorProxy $grupoCompra) {
+        $grupoCompra->post("/Suscripcion[/]", \CompraControlador::class . ':AdquirirSuscripcion' );
+        $grupoCompra->get("/Estado/{nroSocio}[/]", \CompraControlador::class . ':ObtenerEstadoDeCompras' );
+        $grupoCompra->get("/{nroSocio}[/]", \CompraControlador::class . ':ObtenerComprasDeSocio' );
     });
 
     $app->group("/Pago", function (RouteCollectorProxy $grupoPago) {
-        $grupoPago->post("[/]", \PagoControlador::class . ':PagarCuotas' );
+        $grupoPago->post("[/]", \PagoControlador::class . ':PagarCompras' );
     });
 
     $app->group("/Profesor", function (RouteCollectorProxy $grupoProfesor) {

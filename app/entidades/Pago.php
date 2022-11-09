@@ -5,6 +5,7 @@
         private $nroPago;
         private $importe;
         private $fecha;
+        private $medioPago;
 
         function __construct(){
 
@@ -25,6 +26,11 @@
             $this->fecha = $fecha;
         }
 
+        function setMedioPago($medioPago){    
+
+            $this->medioPago = $medioPago;
+        }
+
         function getNroPago(){
             
             return $this->nroPago;
@@ -38,6 +44,11 @@
         function getFecha(){
             
             return $this->fecha;
+        }
+
+        function getMedioPago(){
+            
+            return $this->medioPago;
         }
 
         public function guardarPago(){

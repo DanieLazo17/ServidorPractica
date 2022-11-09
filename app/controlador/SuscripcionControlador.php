@@ -69,6 +69,14 @@
             return $response->withHeader('Content-Type', 'application/json');
         }
 
+        public function RetornarImporte($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();            
+            $idSuscripcion = $listaDeParametros['idSuscripcion'];
 
+            $Suscripcion = new Suscripcion();
+            $Suscripcion->setIdSuscripcion($idSuscripcion);
+
+            return $Suscripcion->obtenerImporteSuscripcion();
+        }
     }
 ?>

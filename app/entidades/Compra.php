@@ -1,8 +1,8 @@
 <?php
 
-    class Cuota{
+    class Compra{
 
-        private $idCuota;
+        private $idCompra;
         private $idSuscripcion;
         private $socio;
         private $importe;
@@ -15,9 +15,9 @@
 
         }
 
-        function setIdCuota($idCuota){    
+        function setIdCompra($idCompra){    
 
-            $this->idCuota = $idCuota;
+            $this->idCompra = $idCompra;
         }
 
         function setSuscripcion($idSuscripcion){    
@@ -55,9 +55,9 @@
             $this->pago = $pago;
         }
 
-        function getIdCuota(){
+        function getIdCompra(){
             
-            return $this->idCuota;
+            return $this->idCompra;
         }
 
         function getidSuscripcion(){
@@ -95,34 +95,34 @@
             return $this->pago;
         }
 
-        public function guardarCuotasDeSocio(){
+        public function guardarCompraDeSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO cuota(idSuscripcion, socio, importe, fechaEmision, fechaVencimiento, estado) VALUES (?,?,?,?,?,?)");
-            //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->idSuscripcion, $this->socio, $this->importe, $this->fechaEmision, $this->fechaVencimiento, $this->estado));
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO compra(idSuscripcion, socio, importe, estado) VALUES (?,?,?,?)");
+            
+            return $consulta->execute(array($this->idSuscripcion, $this->socio, $this->importe, $this->estado));
         }
 
-        public function actualizarEstadoDeCuotas(){
+        public function actualizarEstadoDeCompras(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ? WHERE socio = ? AND pago IS NULL AND CURRENT_DATE > fechaVencimiento");
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE compra SET estado = ? WHERE socio = ? AND pago IS NULL AND CURRENT_DATE > fechaVencimiento");
             $estado = "Impaga";
             
             return $consulta->execute(array($estado, $this->socio));
         }
 
-        public function obtenerCuotasEmitOVenc(){
+        public function obtenerComprasEmitOVenc(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCuota, idSuscripcion, importe, fechaVencimiento, estado FROM cuota WHERE socio=? AND (estado='Emitida' OR estado='Impaga')");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idCompra, idSuscripcion, importe, fechaVencimiento, estado FROM compra WHERE socio=? AND (estado='Emitida' OR estado='Impaga')");
             $consulta->execute(array($this->socio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
-        public function actualizarPagoDeCuota(){
+        public function actualizarPagoDeCompra(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("UPDATE cuota SET estado = ?, pago = ? WHERE idCuota = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE compra SET estado = ?, pago = ? WHERE idCompra = ?");
             
-            return $consulta->execute(array($this->estado, $this->pago, $this->idCuota));
+            return $consulta->execute(array($this->estado, $this->pago, $this->idCompra));
         }
     }
 ?>

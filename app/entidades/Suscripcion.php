@@ -113,5 +113,12 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerImporteSuscripcion(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT precio FROM suscripcion WHERE idSuscripcion = ?");
+            $consulta->execute(array($this->idSuscripcion));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
     }
 ?>
