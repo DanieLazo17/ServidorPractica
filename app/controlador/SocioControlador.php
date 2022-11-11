@@ -156,14 +156,14 @@
             return $response;
         }
 
-        public function RetornarClasesEnCurso($request, $response, $args){
+        public function RetornarClasesHabilitadas($request, $response, $args){
             $nroSocio = $args['nroSocio'];
 
             $Socio = new Socio();
             $Socio->setNroSocio($nroSocio);
-            $arregloClases = $Socio->obtenerClasesEnCurso();
+            $ClasesHabilitadas = $Socio->obtenerClasesHabilitadas();
 
-            $response->getBody()->write(json_encode($arregloClases));
+            $response->getBody()->write(json_encode($ClasesHabilitadas));
             return $response->withHeader('Content-Type', 'application/json');
         }
 

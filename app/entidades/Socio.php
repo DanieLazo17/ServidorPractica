@@ -153,10 +153,47 @@
             return $consulta->execute(array($this->estado, $this->nroSocio));
         }
 
-        public function obtenerClasesEnCurso(){
+        public function obtenerClasesHabilitadas(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, CONCAT(p.nombre, ' ',p.apellido) AS profesor, s.nombreSalon AS salon FROM clase AS c, salon AS s, tipoclase AS tc, profesor AS p, socioclase AS sc WHERE c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.profesor = p.legajo AND c.idClase = sc.clase AND sc.socio = ?");
-            $consulta->execute(array($this->nroSocio));
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase, cxd.fecha, suscripciones.nombreActividad, cl.dias, cl.horaDeInicio, salon.nombreSalon, CONCAT(p.nombre, ' ',p.apellido) AS profesor, cl.cupos, cl.cupos-COUNT(sc.clase) AS cupoDisponible 
+            FROM clase AS cl, clasexdia AS cxd, socio AS s, salon, profesor AS p, socioclase AS sc,
+                (SELECT a.idActividad AS idActividad, a.nombre AS nombreActividad, su.cantClases, co.fechaVencimiento
+                FROM compra AS co, suscripcion AS su, socio AS so, actividad AS a
+                WHERE co.idSuscripcion = su.idSuscripcion 
+                AND co.socio = so.nroSocio
+                AND su.actividad = a.idActividad
+                AND co.socio = ?
+                AND CURRENT_DATE BETWEEN co.fechaEmision AND co.fechaVencimiento
+                AND co.estado = 'PAGADA' OR co.estado = 'BONIFICADA') AS suscripciones
+            WHERE cl.tipoActividad = suscripciones.idActividad
+            AND cl.idClase = cxd.idClase
+            AND cl.salon = salon.idSalon
+            AND cl.profesor = p.legajo
+            AND sc.clase = cxd.idClasePorDia
+            AND sc.socio = s.nroSocio
+            AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
+            GROUP BY sc.clase
+            UNION
+            SELECT cxd.idClasePorDia, cxd.idClase, cxd.fecha, suscripciones.nombreActividad, c.dias, c.horaDeInicio, salon.nombreSalon, CONCAT(p.nombre, ' ',p.apellido) AS profesor, c.cupos, c.cupos AS cupoDisponible
+            FROM clasexdia AS cxd, clase AS c, profesor AS p, actividad AS a, salon,
+                (SELECT a.idActividad AS idActividad, a.nombre AS nombreActividad, su.cantClases, co.fechaVencimiento
+                FROM compra AS co, suscripcion AS su, socio AS so, actividad AS a
+                WHERE co.idSuscripcion = su.idSuscripcion 
+                AND co.socio = so.nroSocio 
+                AND su.actividad = a.idActividad
+                AND co.socio = ?
+                AND CURRENT_DATE BETWEEN co.fechaEmision AND co.fechaVencimiento
+                AND co.estado = 'PAGADA' OR co.estado = 'BONIFICADA') AS suscripciones
+            WHERE cxd.idClase = c.idClase 
+            AND c.profesor = p.legajo
+            AND c.tipoActividad = a.idActividad
+            AND c.salon = salon.idSalon
+            AND cxd.fecha BETWEEN DATE_SUB(CURRENT_DATE, INTERVAL 1 MONTH) AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)
+            AND cxd.idClasePorDia NOT IN
+            (SELECT DISTINCT clase
+            FROM socioclase)
+            ORDER BY fecha ASC");
+            $consulta->execute(array($this->nroSocio, $this->nroSocio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
