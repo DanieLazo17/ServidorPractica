@@ -85,7 +85,7 @@
             $Compra->setSocio($nroSocio);            
             $Compra->setImporte($ImporteSuscripcion['precio']);
             $Compra->setEstado("Emitida");
-            // $Compra->guardarCompraDeSocio();
+            $Compra->guardarCompraDeSocio();
 
             $response->getBody()->write("Suscripción agregada correctamente");
             return $response;
@@ -107,23 +107,20 @@
 
         public function RegistrarPago($request, $response, $args, $pago){
             $listaDeParametros = $request->getParsedBody();
-            $Compras = $listaDeParametros['compras'];
-            $arregloDeCompras = json_decode($Compras);
+            $IDCompra = $listaDeParametros['idCompra'];            
 
             $FechaActual = date("Y-m-d");
             $date = date_create($FechaActual);
             date_add($date,date_interval_create_from_date_string("30 days"));
             $FechaVencimiento = date_format($date,"Y-m-d");
-
-            for($i = 0; $i < count($arregloDeCompras); ++$i){
-                $Compra = new Compra();
-                $Compra->setIdCompra($arregloDeCompras[$i]);
-                $Compra->setFechaEmision($FechaActual);
-                $Compra->setFechaVencimiento($FechaVencimiento);
-                $Compra->setEstado("Pagada");
-                $Compra->setPago($pago);
-                $Compra->pagarCompra();
-            }
+            
+            $Compra = new Compra();
+            $Compra->setIdCompra($IDCompra);
+            $Compra->setFechaEmision($FechaActual);
+            $Compra->setFechaVencimiento($FechaVencimiento);
+            $Compra->setEstado("Pagada");
+            $Compra->setPago($pago);
+            $Compra->pagarCompra();
 
             return;
         }
