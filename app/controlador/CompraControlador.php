@@ -107,7 +107,7 @@
 
         public function RegistrarPago($request, $response, $args, $pago){
             $listaDeParametros = $request->getParsedBody();
-            $IDCompra = $listaDeParametros['idCompra'];            
+            $IDCompra = $listaDeParametros['idCompra'];
 
             $FechaActual = date("Y-m-d");
             $date = date_create($FechaActual);

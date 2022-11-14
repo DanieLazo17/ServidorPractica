@@ -53,9 +53,9 @@
 
         public function guardarPago(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(importe, fecha) VALUES (?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(nroPago, importe, fecha) VALUES (?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->importe, $this->fecha));
+            return $consulta->execute($this->nroPago, $this->importe, $this->fecha);
         }
 
         public static function obtenerUltimoNroPago(){
