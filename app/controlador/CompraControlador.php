@@ -80,17 +80,21 @@
             $SuscripcionControlador = new SuscripcionControlador();
             $ImporteSuscripcion = $SuscripcionControlador->RetornarImporte($request, $response, $args);
 
+            $UltimoIDCompra = Compra::obtenerUltimoIDCompra();
+            $NuevoIDCompra = $UltimoIDCompra['idCompra'] + 1;
+
             $Compra = new Compra();
+            $Compra->setIdCompra($NuevoIDCompra);
             $Compra->setSuscripcion($idSuscripcion);
             $Compra->setSocio($nroSocio);            
             $Compra->setImporte($ImporteSuscripcion['precio']);
             $Compra->setEstado("Emitida");
             $Compra->guardarCompraDeSocio();
 
-            $response->getBody()->write("Suscripción agregada correctamente");
-            return $response;
-            // $response->getBody()->write(json_encode($ImporteSuscripcion));
-            // return $response->withHeader('Content-Type', 'application/json');
+            // $response->getBody()->write("Suscripción agregada correctamente");
+            // return $response;
+            $response->getBody()->write(json_encode($NuevoIDCompra));
+            return $response->withHeader('Content-Type', 'application/json');
         }
 
         public function ObtenerComprasDeSocio($request, $response, $args){

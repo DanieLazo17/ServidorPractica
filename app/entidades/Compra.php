@@ -97,9 +97,9 @@
 
         public function guardarCompraDeSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO compra(idSuscripcion, socio, importe, estado) VALUES (?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO compra(idCompra, idSuscripcion, socio, importe, estado) VALUES (?,?,?,?,?)");
             
-            return $consulta->execute(array($this->idSuscripcion, $this->socio, $this->importe, $this->estado));
+            return $consulta->execute(array($this->idCompra, $this->idSuscripcion, $this->socio, $this->importe, $this->estado));
         }
 
         public function actualizarEstadoDeCompras(){
@@ -123,6 +123,14 @@
             $consulta = $objAccesoDatos->prepararConsulta("UPDATE compra SET fechaEmision = ?, fechaVencimiento = ?, estado = ?, pago = ? WHERE idCompra = ?");
             
             return $consulta->execute(array($this->fechaEmision, $this->fechaVencimiento, $this->estado, $this->pago, $this->idCompra));
+        }
+
+        public static function obtenerUltimoIDCompra(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT MAX(idCompra) AS idCompra FROM compra");
+            $consulta->execute();
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
         }
     }
 ?>
