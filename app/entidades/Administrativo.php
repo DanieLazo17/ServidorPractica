@@ -94,6 +94,14 @@
             
             return $consulta->execute(array($this->nombre, $this->apellido, $this->direccion, $this->telefono, $this->dni));
         }
+
+        public function obtenerNombreCompleto(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT CONCAT(nombre, ' ',apellido) AS nombreCompleto FROM administrativo WHERE usuario = ?");
+            $consulta->execute(array($this->usuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
     }
 
 ?>

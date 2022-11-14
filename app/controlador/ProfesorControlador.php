@@ -148,6 +148,13 @@
             $response->getBody()->write(json_encode($ObjetoProfesor));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarNombreYEstado($IDUsuario){
+            $Profesor = new Profesor();
+            $Profesor->setUsuario($IDUsuario);
+
+            return $Profesor->obtenerNombreYEstado();
+        }
     }
 
 ?>

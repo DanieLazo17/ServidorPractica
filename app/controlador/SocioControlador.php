@@ -204,6 +204,13 @@
             $response->getBody()->write(json_encode($SuscripcionesActivas));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarNombreYEstado($IDUsuario){
+            $Socio = new Socio();
+            $Socio->setUsuario($IDUsuario);
+
+            return $Socio->obtenerNombreYEstado();
+        }
     }
 
 ?>

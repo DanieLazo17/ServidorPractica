@@ -44,5 +44,12 @@
             $response->getBody()->write("Se actualizó datos correctamente");
             return $response;
         }
+
+        public function RetornarNombreCompleto($IDUsuario){
+            $Administrativo = new Administrativo();
+            $Administrativo->setUsuario($IDUsuario);
+
+            return $Administrativo->obtenerNombreCompleto();
+        }
     }
 ?>

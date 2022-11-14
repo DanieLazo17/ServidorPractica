@@ -229,6 +229,14 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerNombreYEstado(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT CONCAT(nombre, ' ',apellido) AS nombreCompleto, estado FROM socio WHERE usuario = ?");
+            $consulta->execute(array($this->usuario));
+
+            return $consulta->fetch(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");

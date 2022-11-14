@@ -13,7 +13,7 @@
             $Usuario = new Usuario();
             $Usuario->setEmail($listaDeParametros['email']);
             $objetoUsuario = $Usuario->obtenerUsuario();
-            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "estado"=>null, "origenDeContrasena"=>null);
+            $UsuarioRegistrado = array("idUsuario"=>null, "idPerfil"=>null, "email"=>null, "nombreCompleto"=>null, "estado"=>null, "origenDeContrasena"=>null);
 
             if(!$objetoUsuario){
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
@@ -24,19 +24,19 @@
                 $idDePerfil = $objetoUsuario->obtenerPerfil();
 
                 if($idDePerfil['idPerfil'] == "ADMIN"){
-                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>null, "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                    $AdministrativoControlador = new AdministrativoControlador();
+                    $NombreCompleto = $AdministrativoControlador->RetornarNombreCompleto($objetoUsuario->getIdUsuario());
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "nombreCompleto"=>$NombreCompleto['nombreCompleto'], "estado"=>null, "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
                 }
                 if($idDePerfil['idPerfil'] == "PRO"){
-                    $Profesor = new Profesor();
-                    $Profesor->setUsuario($objetoUsuario->getIdUsuario());
-                    $estadoProfesor = $Profesor->obtenerEstado();
-                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>$estadoProfesor['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                    $ProfesorControlador = new ProfesorControlador();
+                    $NombreYEstado = $ProfesorControlador->RetornarNombreYEstado($objetoUsuario->getIdUsuario());
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "nombreCompleto"=>$NombreYEstado['nombreCompleto'], "estado"=>$NombreYEstado['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
                 }
                 if($idDePerfil['idPerfil'] == "SOC"){
-                    $Socio = new Socio();
-                    $Socio->setUsuario($objetoUsuario->getIdUsuario());
-                    $estadoSocio = $Socio->obtenerEstado();
-                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "estado"=>$estadoSocio['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
+                    $SocioControlador = new SocioControlador();
+                    $NombreYEstado = $SocioControlador->RetornarNombreYEstado($objetoUsuario->getIdUsuario());
+                    $UsuarioRegistrado = array("idUsuario"=>$objetoUsuario->getIdUsuario(), "idPerfil"=>$idDePerfil['idPerfil'], "email"=>$objetoUsuario->getEmail(), "nombreCompleto"=>$NombreYEstado['nombreCompleto'], "estado"=>$NombreYEstado['estado'], "origenDeContrasena"=>$objetoUsuario->getOrigenDeContrasena());
                 }
                 $response->getBody()->write(json_encode($UsuarioRegistrado));
             }
