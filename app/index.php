@@ -100,6 +100,8 @@
         $grupoSocio->get("/{nroSocio}[/]", \SocioControlador::class . ':RetornarSocio' );
         $grupoSocio->get("/Suscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarSuscripcionesActivas' );
         $grupoSocio->get("/ClasesHabilitadas/{nroSocio}[/]", \SocioControlador::class . ':RetornarClasesHabilitadas' );
+        $grupoSocio->get("/Inscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarClasesInscriptas' );
+        $grupoSocio->post("/HistorialInscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarHistorialInscripciones' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );

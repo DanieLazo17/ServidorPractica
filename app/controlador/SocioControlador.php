@@ -211,6 +211,31 @@
 
             return $Socio->obtenerNombreYEstado();
         }
+
+        public function RetornarClasesInscriptas($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $ClasesInscriptas = $Socio->obtenerClasesInscriptas();
+
+            $response->getBody()->write(json_encode($ClasesInscriptas));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
+
+        public function RetornarHistorialInscripciones($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $FechaMin = $listaDeParametros['fechaMin'];
+            $FechaMax = $listaDeParametros['fechaMax'];
+            $nroSocio = $args['nroSocio'];
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $HistorialInscripciones = $Socio->obtenerHistorialInscripciones($FechaMin, $FechaMax);
+
+            $response->getBody()->write(json_encode($HistorialInscripciones));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

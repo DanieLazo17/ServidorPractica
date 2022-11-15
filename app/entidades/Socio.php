@@ -238,6 +238,38 @@
             return $consulta->fetch(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerClasesInscriptas(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase, a.nombre, cxd.fecha, c.dias, c.horaDeInicio, p.nombre, s.nombreSalon
+            FROM socioclase AS sc, clasexdia AS cxd, clase AS c, actividad AS a, profesor AS p, salon AS s 
+            WHERE sc.clase = cxd.idClasePorDia
+            AND cxd.idClase = c.idClase
+            AND c.tipoActividad = a.idActividad
+            AND c.profesor = p.legajo
+            AND c.salon = s.idSalon
+            AND sc.socio = ?     
+            AND cxd.fecha BETWEEN CURRENT_DATE AND DATE_ADD(CURRENT_DATE, INTERVAL 1 MONTH)");
+            $consulta->execute(array($this->nroSocio));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
+        public function obtenerHistorialInscripciones($FechaMin, $FechaMax){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase, a.nombre, cxd.fecha, c.dias, c.horaDeInicio, p.nombre, s.nombreSalon
+            FROM socioclase AS sc, clasexdia AS cxd, clase AS c, actividad AS a, profesor AS p, salon AS s 
+            WHERE sc.clase = cxd.idClasePorDia
+            AND cxd.idClase = c.idClase
+            AND c.tipoActividad = a.idActividad
+            AND c.profesor = p.legajo
+            AND c.salon = s.idSalon
+            AND sc.socio = ?     
+            AND cxd.fecha BETWEEN ? AND ?");
+            $consulta->execute(array($this->nroSocio, $FechaMin, $FechaMax));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");
