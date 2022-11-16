@@ -116,6 +116,12 @@
             //Devuelve true en caso de éxito o false en caso de error.
             return $consulta->execute(array($this->nroSocio, $idClasePorDia));
         }
+        public function guardarDesinscripcionAClase($idClasePorDia){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("DELETE FROM  socioclase WHERE socio= ? AND clase = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->nroSocio, $idClasePorDia));
+        }
 
         public function obtenerSocio(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();

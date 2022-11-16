@@ -103,6 +103,7 @@
         $grupoSocio->get("/Inscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarClasesInscriptas' );
         $grupoSocio->post("/HistorialInscripciones/{nroSocio}[/]", \SocioControlador::class . ':RetornarHistorialInscripciones' );
         $grupoSocio->post("/Inscripcion[/]", \SocioControlador::class . ':InscribirAClase' );
+        $grupoSocio->post("/Desinscripcion[/]", \SocioControlador::class . ':DesinscribirAClase' );
         //$grupoSocio->post("/ActualizacionDeDireccion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDireccion' );
         //$grupoSocio->post("/ActualizacionDeTelefono/{nroSocio}[/]", \SocioControlador::class . ':ActualizarTelefono' );
         $grupoSocio->post("/Actualizacion/{nroSocio}[/]", \SocioControlador::class . ':ActualizarDatos' );

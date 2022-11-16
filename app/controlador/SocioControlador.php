@@ -90,6 +90,21 @@
             return $response;
         }
 
+
+        public function DesinscribirAClase($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+
+            $nroSocio = $listaDeParametros['nroSocio'];
+            $idClasePorDia = $listaDeParametros['idClasePorDia'];
+
+            $ObjetoSocio = new Socio();
+            $ObjetoSocio->setNroSocio($nroSocio);
+            $ObjetoSocio->guardarDesinscripcionAClase($idClasePorDia);
+
+            $response->getBody()->write("Se realizó  desinscripción correctamente");
+            return $response;
+        }
+
         public function ActualizarDatos($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $nombre = $listaDeParametros['nombre'];
