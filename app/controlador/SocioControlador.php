@@ -91,6 +91,22 @@
         }
 
 
+        public function GuardarAsistenciaAClase($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+
+            $nroSocio = $listaDeParametros['nroSocio'];
+            $idClasePorDia = $listaDeParametros['idClasePorDia'];
+            $presente = $listaDeParametros['presente'];
+
+            $ObjetoSocio = new Socio();
+            $ObjetoSocio->setNroSocio($nroSocio);
+            $ObjetoSocio->guardarAsistenciaAClase($idClasePorDia,$presente);
+
+            $response->getBody()->write("Se guardó asistencia correctamente.");
+            return $response;
+        }
+
+
         public function DesinscribirAClase($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
 
