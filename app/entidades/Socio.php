@@ -283,6 +283,29 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerClasesRestantes(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT s.nroSocio, suscripciones.idCompra, suscripciones.idSuscripcion, suscripciones.nombreActividad, suscripciones.cantClases AS cantClasesPermitidas, suscripciones.cantClases - COUNT(sc.socio) AS cantClasesRestantes
+            FROM clase AS cl, clasexdia AS cxd, socio AS s, socioclase AS sc,
+                (SELECT co.idCompra AS idCompra, su.idSuscripcion AS idSuscripcion, a.idActividad AS idActividad, a.nombre AS nombreActividad, su.cantClases AS cantClases, co.fechaEmision AS fechaEmision, co.fechaVencimiento AS fechaVencimiento
+                FROM compra AS co, suscripcion AS su, socio AS so, actividad AS a
+                WHERE co.idSuscripcion = su.idSuscripcion 
+                AND co.socio = so.nroSocio
+                AND su.actividad = a.idActividad
+                AND co.socio = ?
+                AND CURRENT_DATE BETWEEN co.fechaEmision AND co.fechaVencimiento
+                AND co.estado = 'PAGADA' OR co.estado = 'BONIFICADA') AS suscripciones
+            WHERE cl.tipoActividad = suscripciones.idActividad
+            AND cl.idClase = cxd.idClase
+            AND sc.clase = cxd.idClasePorDia
+            AND sc.socio = s.nroSocio
+            AND cxd.fecha BETWEEN suscripciones.fechaEmision AND suscripciones.fechaVencimiento
+            GROUP BY suscripciones.idCompra");
+            $consulta->execute(array($this->nroSocio));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");

@@ -267,6 +267,17 @@
             $response->getBody()->write(json_encode($HistorialInscripciones));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarClasesRestantes($request, $response, $args){
+            $nroSocio = $args['nroSocio'];
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $ClasesRestantes = $Socio->obtenerClasesRestantes();
+
+            $response->getBody()->write(json_encode($ClasesRestantes));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>
