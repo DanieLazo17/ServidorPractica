@@ -1,10 +1,5 @@
 <?php
 
-    /*
-        El objeto de la clase usuarioControlador realiza cada una de las funciones que necesitamos para que funcione nuestra aplicación.
-        En la clase controlador, creamos funciones de acuerdo a qué funcionamiento le damos a una llamada o solicitud
-    */
-
     class UsuarioControlador{
 
         public function Validar($request, $response, $args){  

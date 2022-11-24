@@ -17,7 +17,6 @@
     require __DIR__ . '/../vendor/autoload.php';
 
     require __DIR__ . '/accesoADatos/AccesoDatos.php';
-    require __DIR__ . '/sesiones/SesionControlador.php';
     require __DIR__ . '/funciones/funciones.php';
     require __DIR__ . '/entidades/Usuario.php';
     require __DIR__ . '/entidades/Administrativo.php';
@@ -82,8 +81,6 @@
     $app->group("/Usuario", function (RouteCollectorProxy $grupoUsuario) {
         $grupoUsuario->post("[/]", \UsuarioControlador::class . ':Validar' );
         $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
-        //Ir a ruteo /Socio/Registro
-        //$grupoUsuario->post("/Registro[/]", \UsuarioControlador::class . ':Registrar' );
         $grupoUsuario->post("/Recuperacion[/]", \UsuarioControlador::class . ':RecuperarContrasena' );
         $grupoUsuario->post("/CambioDeContrasena[/]", \UsuarioControlador::class . ':CambiarContrasena' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
