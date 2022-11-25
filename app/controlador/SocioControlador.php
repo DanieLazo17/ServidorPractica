@@ -278,6 +278,20 @@
             $response->getBody()->write(json_encode($ClasesRestantes));
             return $response->withHeader('Content-Type', 'application/json');
         }
+
+        public function RetornarHistorialSuscripciones($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $FechaMin = $listaDeParametros['fechaMin'];
+            $FechaMax = $listaDeParametros['fechaMax'];
+            $nroSocio = $args['nroSocio'];
+
+            $Socio = new Socio();
+            $Socio->setNroSocio($nroSocio);
+            $HistorialSuscripciones = $Socio->obtenerHistorialSuscripciones($FechaMin, $FechaMax);
+
+            $response->getBody()->write(json_encode($HistorialSuscripciones));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

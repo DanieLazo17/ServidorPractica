@@ -306,6 +306,23 @@
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
+        public function obtenerHistorialSuscripciones($FechaMin, $FechaMax){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT c.socio, c.idCompra, c.idSuscripcion, su.nombre AS nombreSuscripcion, a.idActividad, a.nombre AS nombreActividad, su.cantClases, c.fechaEmision, c.fechaVencimiento, p.nroPago, p.fecha
+            FROM compra AS c, suscripcion AS su, socio AS s, actividad AS a, pago AS p
+            WHERE c.idSuscripcion = su.idSuscripcion 
+            AND c.socio = s.nroSocio 
+            AND su.actividad = a.idActividad
+            AND c.pago = p.nroPago
+            AND c.socio = ?
+            AND (c.fechaEmision BETWEEN ? AND ?
+            OR c.fechaVencimiento BETWEEN ? AND ?)
+            AND c.estado = 'PAGADA'");
+            $consulta->execute(array($this->nroSocio, $FechaMin, $FechaMax, $FechaMin, $FechaMax));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public static function obtenerSocios(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT nroSocio, nombre, apellido, usuario FROM socio");
