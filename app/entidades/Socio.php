@@ -269,7 +269,7 @@
 
         public function obtenerHistorialInscripciones($FechaMin, $FechaMax){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase, a.nombre, cxd.fecha, c.dias, c.horaDeInicio, p.nombre, s.nombreSalon
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT cxd.idClasePorDia, cxd.idClase,a.nombre AS nombreActividad, cxd.fecha, c.dias, c.horaDeInicio, p.nombre, s.nombreSalon
             FROM socioclase AS sc, clasexdia AS cxd, clase AS c, actividad AS a, profesor AS p, salon AS s 
             WHERE sc.clase = cxd.idClasePorDia
             AND cxd.idClase = c.idClase
