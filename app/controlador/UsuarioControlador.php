@@ -143,6 +143,20 @@
 
             return $Usuario;
         }
+
+        public function CambiarCorreo($request, $response, $args){      
+            $listaDeParametros = $request->getParsedBody();
+            $email = $listaDeParametros['email'];      
+            $idUsuario = $args['idUsuario'];
+
+            $Usuario = new Usuario();
+            $Usuario->setIdUsuario($idUsuario);
+            $Usuario->setEmail($email);
+            $Usuario->actualizarCorreo();
+
+            $response->getBody()->write(json_encode($email));
+            return $response->withHeader('Content-Type', 'application/json');
+        }
     }
 
 ?>

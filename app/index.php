@@ -83,6 +83,7 @@
         $grupoUsuario->post("/Correo[/]", \UsuarioControlador::class . ':ComprobarCorreo' );
         $grupoUsuario->post("/Recuperacion[/]", \UsuarioControlador::class . ':RecuperarContrasena' );
         $grupoUsuario->post("/CambioDeContrasena[/]", \UsuarioControlador::class . ':CambiarContrasena' );
+        $grupoUsuario->post("/EditarCorreo/{idUsuario}[/]", \UsuarioControlador::class . ':CambiarCorreo' );
         $grupoUsuario->get("[/]", \SesionControlador::class . ':Cerrar' );
     });
 

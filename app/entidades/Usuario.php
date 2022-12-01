@@ -101,6 +101,13 @@
             return $consulta->fetch();
         }
 
+        public function actualizarCorreo(){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("UPDATE usuario SET email = ? WHERE idUsuario = ?");
+            //Devuelve true en caso de éxito o false en caso de error.
+            return $consulta->execute(array($this->email, $this->idUsuario));
+        }
+
         public static function buscarCorreo($email){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
             $consulta = $objAccesoDatos->prepararConsulta("SELECT idUsuario, email FROM usuario WHERE email=?");
