@@ -154,7 +154,7 @@
 
         public function obtenerClasesDeProfesor(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, fechaDeInicio, fechaDeFin, s.nombreSalon AS salon, cupos FROM clase AS c, salon AS s, tipoclase AS tc WHERE c.salon = s.idSalon AND c.tipoClase = tc.idTipoClase AND c.profesor = ?");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT idClase, tc.nombre, dias, horaDeInicio, horaDeFin, s.nombreSalon AS salon, cupos FROM clase AS c, salon AS s, actividad AS tc WHERE c.salon = s.idSalon AND c.tipoActividad = tc.idActividad AND c.profesor = ?");
             $consulta->execute(array($this->legajo));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
