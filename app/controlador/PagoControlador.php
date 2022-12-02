@@ -5,6 +5,7 @@
         public function PagarCompras($request, $response, $args){
             $listaDeParametros = $request->getParsedBody();
             $importe = $listaDeParametros['importe'];
+            $medioPago = $listaDeParametros['medioPago'];
             $fechaActual = date("Y/m/d");
 
             //Normalizar datos
@@ -17,6 +18,7 @@
             $Pago->setNroPago($NuevoNroPago);
             $Pago->setImporte($importe);
             $Pago->setFecha($fechaActual);
+            $Pago->setMedioPago($medioPago);
             $Pago->guardarPago();
 
             $CompraControlador = new CompraControlador();
@@ -24,6 +26,20 @@
             
             $response->getBody()->write("Su número de pago es: " . $NuevoNroPago);
             return $response;
+        }
+
+        public function RetornarPagos($request, $response, $args){
+            $listaDeParametros = $request->getParsedBody();
+            $FechaMin = $listaDeParametros['fechaMin'];
+            $FechaMax = $listaDeParametros['fechaMax'];
+            $medioPago = $listaDeParametros['medioPago'];
+
+            $Pago = new Pago();
+            $Pago->setMedioPago($medioPago);
+            $HistorialPagos = $Pago->obtenerHistorialPagos($FechaMin, $FechaMax);
+
+            $response->getBody()->write(json_encode($HistorialPagos));
+            return $response->withHeader('Content-Type', 'application/json');
         }
     }
 ?>

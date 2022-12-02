@@ -53,9 +53,20 @@
 
         public function guardarPago(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(nroPago, importe, fecha) VALUES (?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(nroPago, importe, fecha) VALUES (?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
-            return $consulta->execute(array($this->nroPago, $this->importe, $this->fecha));
+            return $consulta->execute(array($this->nroPago, $this->importe, $this->fecha, $this->medioPago));
+        }
+
+        public function obtenerHistorialPagos($FechaMin, $FechaMax){
+            $objAccesoDatos = AccesoDatos::obtenerInstancia();
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT p.nroPago, p.importe, p.fecha, p.medioPago
+            FROM pago AS p
+            WHERE p.fecha BETWEEN ? AND ?
+            AND p.medioPago = ?");
+            $consulta->execute(array($FechaMin, $FechaMax, $this->medioPago));
+
+            return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
 
         public static function obtenerUltimoNroPago(){

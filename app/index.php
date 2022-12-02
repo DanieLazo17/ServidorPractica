@@ -137,6 +137,7 @@
 
     $app->group("/Pago", function (RouteCollectorProxy $grupoPago) {
         $grupoPago->post("[/]", \PagoControlador::class . ':PagarCompras' );
+        $grupoPago->post("/Historial[/]", \PagoControlador::class . ':RetornarPagos' );
     });
 
     $app->group("/Profesor", function (RouteCollectorProxy $grupoProfesor) {
