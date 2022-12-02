@@ -53,7 +53,7 @@
 
         public function guardarPago(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(nroPago, importe, fecha) VALUES (?,?,?,?)");
+            $consulta = $objAccesoDatos->prepararConsulta("INSERT INTO pago(nroPago, importe, fecha, medioPago) VALUES (?,?,?,?)");
             //Devuelve true en caso de éxito o false en caso de error.
             return $consulta->execute(array($this->nroPago, $this->importe, $this->fecha, $this->medioPago));
         }
