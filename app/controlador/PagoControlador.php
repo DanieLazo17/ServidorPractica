@@ -32,10 +32,10 @@
             $listaDeParametros = $request->getParsedBody();
             $FechaMin = $listaDeParametros['fechaMin'];
             $FechaMax = $listaDeParametros['fechaMax'];
-            $medioPago = $listaDeParametros['medioPago'];
+           // $medioPago = $listaDeParametros['medioPago'];
 
             $Pago = new Pago();
-            $Pago->setMedioPago($medioPago);
+           // $Pago->setMedioPago($medioPago);
             $HistorialPagos = $Pago->obtenerHistorialPagos($FechaMin, $FechaMax);
 
             $response->getBody()->write(json_encode($HistorialPagos));

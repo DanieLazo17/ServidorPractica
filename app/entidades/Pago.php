@@ -63,8 +63,8 @@
             $consulta = $objAccesoDatos->prepararConsulta("SELECT p.nroPago, p.importe, p.fecha, p.medioPago
             FROM pago AS p
             WHERE p.fecha BETWEEN ? AND ?
-            AND p.medioPago = ?");
-            $consulta->execute(array($FechaMin, $FechaMax, $this->medioPago));
+            /*AND p.medioPago = ?*/");
+            $consulta->execute(array($FechaMin, $FechaMax, /*$this->medioPago*/));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
