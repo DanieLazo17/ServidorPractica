@@ -32,6 +32,7 @@
     require __DIR__ . '/entidades/Rutina.php';
     require __DIR__ . '/entidades/Suscripcion.php';
     require __DIR__ . '/entidades/ClasePorDia.php';
+    require __DIR__ . '/entidades/Informe.php';
     require __DIR__ . '/controlador/UsuarioControlador.php';
     require __DIR__ . '/controlador/SocioControlador.php';
     require __DIR__ . '/controlador/ActividadControlador.php';
@@ -46,6 +47,7 @@
     require __DIR__ . '/controlador/RutinaControlador.php';
     require __DIR__ . '/controlador/SuscripcionControlador.php';
     require __DIR__ . '/controlador/ClasePorDiaControlador.php';
+    require __DIR__ . '/controlador/InformeControlador.php';
 
     //Crear un objeto
     $app = AppFactory::create();
@@ -173,6 +175,11 @@
     $app->group("/ClasePorDia", function (RouteCollectorProxy $grupoClasePorDia) {
         $grupoClasePorDia->get("[/]", \ClasePorDiaControlador::class . ':RetornarClasesPorDia' );        
         $grupoClasePorDia->get("/{idClasePorDia}[/]", \ClasePorDiaControlador::class . ':RetornarInscriptos' );
+    });
+
+    $app->group("/Informe", function (RouteCollectorProxy $grupoInforme) {
+        $grupoInforme->get("/ClasesXDia[/]", \InformeControlador::class . ':RetornarClasesXDia' );
+        $grupoInforme->get("/InscriptosXActividad[/]", \InformeControlador::class . ':RetornarInscriptosXActividad' );
     });
 
     $app->run();
