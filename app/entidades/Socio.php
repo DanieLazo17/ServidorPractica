@@ -299,9 +299,11 @@
             AND cl.idClase = cxd.idClase
             AND sc.clase = cxd.idClasePorDia
             AND sc.socio = s.nroSocio
+            AND sc.socio = ?
+            AND s.nroSocio = ?
             AND cxd.fecha BETWEEN suscripciones.fechaEmision AND suscripciones.fechaVencimiento
             GROUP BY suscripciones.idCompra");
-            $consulta->execute(array($this->nroSocio));
+            $consulta->execute(array($this->nroSocio, $this->nroSocio, $this->nroSocio));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
