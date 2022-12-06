@@ -8,11 +8,12 @@
 
         public function obtenerClasesXDia(){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT DISTINCT fecha, COUNT(*) AS Total
-            FROM clasexdia
-            group BY fecha
-            ORDER by fecha");
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT DISTINCT dias, COUNT(*) AS Total
+            FROM clase
+            group BY dias
+            ORDER by dias");
             $consulta->execute();
+            
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
         }
