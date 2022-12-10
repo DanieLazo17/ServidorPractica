@@ -180,6 +180,11 @@
     $app->group("/Informe", function (RouteCollectorProxy $grupoInforme) {
         $grupoInforme->get("/ClasesXDia[/]", \InformeControlador::class . ':RetornarClasesXDia' );
         $grupoInforme->get("/InscriptosXActividad[/]", \InformeControlador::class . ':RetornarInscriptosXActividad' );
+        $grupoInforme->get("/SuscripcionesActivas[/]", \InformeControlador::class . ':RetornarSuscripcionesActivas' );
+        $grupoInforme->get("/TotalSocios[/]", \InformeControlador::class . ':RetornarTotalSocios' );
+        $grupoInforme->get("/TotalProfes[/]", \InformeControlador::class . ':RetornarTotalProfes' );
+        $grupoInforme->get("/TotalClases[/]", \InformeControlador::class . ':RetornarTotalClases' );
+        $grupoInforme->get("/TotalRutinas[/]", \InformeControlador::class . ':RetornarTotalRutinas' );
     });
 
     $app->run();
