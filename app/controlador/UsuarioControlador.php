@@ -72,7 +72,7 @@
             $UsuarioNuevo = array("idUsuario"=>$UltimoId['idUsuario'], "contrasena"=>$contrasenaAleatoria);
 
             $asunto = "Clave de Acceso Web - Gimnasio Push Up";
-            $mensaje = "Su contraseña provisoria es: " . $contrasenaAleatoria;
+            $mensaje = "Su clave provisoria es: " . $contrasenaAleatoria;
             enviarCorreo($ObjetoUsuario->getEmail(), $asunto, $mensaje);
 
             //$response->getBody()->write($contrasenaAleatoria);
@@ -101,7 +101,7 @@
             $ObjUsuario->actualizarContrasena();
             $ObjUsuario->actualizarOrigenDeContrasena();
             $asunto = "Clave de Acceso";
-            $mensaje = "Su contraseña nueva es: " . $contrasenaNueva;
+            $mensaje = "Su clave nueva es: " . $contrasenaNueva;
             /*
             $cabecera = 'From: daniel.lazo92@gmail.com' . "\r\n" .
             'Reply-To: daniel.lazo92@gmail.com' . "\r\n" .
