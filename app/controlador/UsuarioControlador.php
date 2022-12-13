@@ -71,7 +71,7 @@
             $UltimoId = Usuario::obtenerUltimoId();
             $UsuarioNuevo = array("idUsuario"=>$UltimoId['idUsuario'], "contrasena"=>$contrasenaAleatoria);
 
-            $asunto = "Clave de Acceso";
+            $asunto = "Clave de Acceso Web - Gimnasio Push Up";
             $mensaje = "Su contraseña provisoria es: " . $contrasenaAleatoria;
             enviarCorreo($ObjetoUsuario->getEmail(), $asunto, $mensaje);
 
