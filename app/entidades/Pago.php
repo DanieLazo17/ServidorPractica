@@ -60,10 +60,12 @@
 
         public function obtenerHistorialPagos($FechaMin, $FechaMax){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT p.nroPago, p.importe, p.fecha, p.medioPago
-            FROM pago AS p
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT p.nroPago, p.importe, p.fecha, p.medioPago,s.nombre,s.apellido 
+            FROM pago AS p, compra as c, socio as s
+           
             WHERE p.fecha BETWEEN ? AND ?
-            AND p.medioPago = ?");
+            AND p.medioPago = ?
+            AND p.nroPago=c.pago and c.socio=s.nroSocio");
             $consulta->execute(array($FechaMin, $FechaMax, $this->medioPago));
 
             return $consulta->fetchAll(PDO::FETCH_ASSOC);
