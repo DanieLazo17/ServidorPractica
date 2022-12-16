@@ -310,7 +310,7 @@
 
         public function obtenerHistorialSuscripciones($FechaMin, $FechaMax){
             $objAccesoDatos = AccesoDatos::obtenerInstancia();
-            $consulta = $objAccesoDatos->prepararConsulta("SELECT c.socio, c.idCompra, c.idSuscripcion, su.nombre AS nombreSuscripcion, a.idActividad, a.nombre AS nombreActividad, su.cantClases, c.fechaEmision, c.fechaVencimiento, p.nroPago, p.fecha
+            $consulta = $objAccesoDatos->prepararConsulta("SELECT c.socio, c.idCompra, c.idSuscripcion, su.nombre AS nombreSuscripcion, a.idActividad, a.nombre AS nombreActividad, su.cantClases, c.fechaEmision, c.fechaVencimiento, p.nroPago, p.fecha, p.importe
             FROM compra AS c, suscripcion AS su, socio AS s, actividad AS a, pago AS p
             WHERE c.idSuscripcion = su.idSuscripcion 
             AND c.socio = s.nroSocio 
